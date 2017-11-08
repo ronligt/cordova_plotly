@@ -2,7 +2,7 @@
 // Laboratory experiment 6.8
 // i.t. young
 // Thursday, 28 September 2017
-// 
+//
 // ****************************************************************
 // checked Tuesday, 3 October 2017
 
@@ -70,7 +70,7 @@ var lambda = sigma;
 // templates in SSPplotting.js
 // r=raw, f=filtered, s=signal, h=histogram, c=correlation, p=psd
 // t=continuous time, d = discrete time
-var rstg = cloneObj(CTPlot);  
+var rstg = cloneObj(CTPlot);
 var rsdg = cloneObj(DTPlot);
 var rctg = cloneObj(CTPlot);
 var rcdg = cloneObj(DTPlot);
@@ -134,7 +134,7 @@ function process()
 	var rpsdTemp = abssq(rSpect);  // power spectral density
 	rpsd = uRs(rpsdTemp);
 	autoCorrData = uRs(fft(rpsdTemp, nn, ndim, BACKWARD));
-	
+
 	if (thisAlg === 't')
 		{
 		//  filter in t-domain
@@ -263,12 +263,12 @@ function myFunctionZoom(val)
 	fsdg.x = rsdg.x;
 	rsdg.y = yDataNew;
 	fsdg.y = zFdN;
-	
+
 	rsdg.error_y.array = zeroesNew;
 	fsdg.error_y.array = rsdg.error_y.array;
 	rsdg.error_y.arrayminus = yDataNew;
 	fsdg.error_y.arrayminus = zFdN;
-	
+
 	rctg.x = binning(tauCTnew,binningFactor);
 	fctg.x = rctg.x;
 	rctg.y = binning(zAuCoDN,binningFactor);
@@ -278,7 +278,7 @@ function myFunctionZoom(val)
 	fcdg.x = rcdg.x;
 	rcdg.y = zAuCoDN;
 	fcdg.y = zAuFiCoDN;
-	
+
 	rcdg.error_y.array = zeroesNew;
 	fcdg.error_y.array = rcdg.error_y.array;
 	rcdg.error_y.arrayminus = zAuCoDN;
@@ -291,13 +291,13 @@ function myFunctionZoom(val)
 			{
 			rsdg.error_y.thickness = DTlineThick;
 			rsdg.marker.size = 3*DTlineThick;
-		
+
 			fsdg.error_y.thickness = DTlineThick;
 			fsdg.marker.size = 3*DTlineThick;
-		
+
 			rcdg.error_y.thickness = DTlineThick;
 			rcdg.marker.size = 3*DTlineThick;
-		
+
 			fcdg.error_y.thickness = DTlineThick;
 			fcdg.marker.size = 3*DTlineThick;
 			}
@@ -305,13 +305,13 @@ function myFunctionZoom(val)
 			{
 			rsdg.error_y.thickness = 2*DTlineThick;
 			rsdg.marker.size = 5*DTlineThick;
-		
+
 			fsdg.error_y.thickness = 2*DTlineThick;
 			fsdg.marker.size = 5*DTlineThick;
-		
+
 			rcdg.error_y.thickness = 2*DTlineThick;
 			rcdg.marker.size = 5*DTlineThick;
-		
+
 			fcdg.error_y.thickness = 2*DTlineThick;
 			fcdg.marker.size = 5*DTlineThick;
 			};
@@ -343,7 +343,7 @@ function myFunctionZoom(val)
 	scaleLabel = power;
 	rpg.x = binning(xDDataNew,binningFactor);
 	let rpgLength = rpg.x.length;
-	
+
 	for (var i = 0; i < nLabels; i++)
 		{
 		// choose label positions from binned data
@@ -392,7 +392,7 @@ function prepareLab_6_8( )
 	sentence2 = "= "+d1round(1000*newSamples/sampFreq)+" [ms]";
 	document.querySelector('#placeN2').value = sentence2;
 	document.querySelector('#placeT').value = d1round(newSamples/sampFreq);
-	
+
 	// initialize data in complex format
 	for (var i = 0; i < 2*lengthMax; i += 2)
 		{
@@ -400,7 +400,7 @@ function prepareLab_6_8( )
 		};
 
 	yData = uRs(rData);  // data is real
-	
+
 	for (var i = startSample; i < stopSample; i++)
 		{
 		xDataDT[i] = i;  // discrete time index
@@ -409,12 +409,12 @@ function prepareLab_6_8( )
 		tauCT[i] = 1000*(i - middleSample)/sampFreq;
 		zeroes[i] = 0;
 		};
-	
+
 	for (var i = 0; i < nLabels; i++)
 		{
 		freqTicks[i] = Math.floor(i*newSamples/(nLabels-1));
 		if (i === (nLabels-1)) freqTicks[i] = newSamples-1;
-		
+
 		if (i < (nLabels-1)/2)
 			freqLabels[i] = evenQ(i) ? negPiSymbol : negPiSymbol+'/'+scaleLabel
 		else if (i === (nLabels-1)/2)
@@ -422,20 +422,20 @@ function prepareLab_6_8( )
 		else
 			freqLabels[i] = evenQ(i) ? posPiSymbol : posPiSymbol+'/'+scaleLabel
 		};
-		
+
 		process();
-		
+
 
 // signal processing initiating ends here
 // *****************************************************************
 // now start displays
 //
 		// raw data: signal & amplitude histogram
-		
+
 		rstg.x = binning(xDataCT,binningFactor);
 		rstg.y = binning(yData,binningFactor);
 		rstl.annotations[0].text = 't [ms]';
-		
+
 
 		rhg.x = yData;
 		nbins = Math.floor(Math.sqrt(rhg.x.length));
@@ -443,7 +443,7 @@ function prepareLab_6_8( )
 		rhg.xbins.start = Math.min(rhg.x);
 		rhg.xbins.end = Math.max(rhg.x);
 		rhl.annotations[0].text = 'signal amplitude';
-		
+
 
 		// filtered data: signal & amplitude histogram
 		fstg.x = rstg.x;
@@ -458,9 +458,9 @@ function prepareLab_6_8( )
 		fhg.xbins.end = Math.max(fhg.x);
 		fhl.title = 'Filtered Amplitude Histogram';
 		fhl.annotations[0].text = 'signal amplitude';
-		
+
 		// raw & filtered data, corr. function, power spectral densities & filter
-		
+
 		var rotSamples = Math.floor(autoCorrData.length/2);
 
 		// these "symmetrics" require binning because they are ANALOG

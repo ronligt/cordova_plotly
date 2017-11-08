@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1, width=device-width">
   <title>Plotly test in Cordova</title>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <!-- Bootstrap-slider -->
+  <link rel="stylesheet" href="css/bootstrap-slider.min.css">
 
   <!-- Local css -->
   <link rel="stylesheet" href="css/slider.css">
@@ -26,15 +30,22 @@
           <input class="range-slider__range" id="slide1" type="range" value="512" min="8" max="72000">
           <span class="range-slider__value">0</span>
         </div>
+        Filter by price interval: <b>€ 10</b> <input id="ex2" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]" data-tooltip="always"/> <b>€ 1000</b>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div id="rawdata" class="responsive-plot"></div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div id="histogram" class="responsive-plot"></div>
+      </div>
+      <div class="col-md-4">
+        <div id="freqdata" class="responsive-plot"></div>
+      </div>
+      <div class="col-md-4">
+        <div id="correlation" class="responsive-plot"></div>
       </div>
     </div>
 
@@ -48,15 +59,26 @@
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
+  <!-- Bootstrap-slider -->
+  <script type="text/javascript" src="js/bootstrap-slider.min.js"></script>
+
   <!-- SSP -->
+  <script type="text/javascript" src="SSPconstants.js"></script>
   <script type="text/javascript" src="SSPmath.js"></script>
   <script type="text/javascript" src="SSPstochastics.js"></script>
+  <script type="text/javascript" src="SSPfourier.js"></script>
 
   <!-- Local script -->
   <script type="text/javascript" src="js/slider.js"></script>
   <script type="text/javascript" src="js/plotly_resize.js"></script>
   <script type="text/javascript" src="js/local.js"></script>
 
+  <script>
+  // With JQuery
+$("#ex2").slider({
+  tooltip: 'always',
+});
+</script>
 </body>
 <!-- Links to used scripts -->
 <!-- value for range https://css-tricks.com/value-bubbles-for-range-inputs/ -->

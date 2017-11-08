@@ -10,7 +10,8 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.2",
+    "bootstrap": "^3.3.7",
+    "bootstrap-slider": "^9.9.0",
     "cordova-browser": "^5.0.1",
     "cordova-ios": "^4.5.2",
     "cordova-plugin-statusbar": "^2.2.3",
