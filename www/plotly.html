@@ -14,37 +14,48 @@
 
 </head>
 <body>
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Plotly with Bootstrap</h1>
-    </div>
-
-    <div class="range-slider">
-      <input class="range-slider__range" id="slide1" type="range" value="512" min="8" max="2048">
-      <span class="range-slider__value">0</span>
-    </div>
+  <div class="jumbotron">
+    <h1>Plotly with Bootstrap</h1>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
+
     <div class="row">
       <div class="col">
-        <div id="myDiv1" class="responsive-plot"></div>
+        <div class="range-slider">
+          <input class="range-slider__range" id="slide1" type="range" value="512" min="8" max="72000">
+          <span class="range-slider__value">0</span>
+        </div>
       </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+        <div id="rawdata" class="responsive-plot"></div>
+      </div>
+      <div class="col">
+        <div id="histogram" class="responsive-plot"></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Plotly -->
-  <script type="text/javascript" src="js/plotly-basic.min.js"></script>
+  <script type="text/javascript" src="js/plotly.min.js"></script>
 
   <!-- Bootstrap -->
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
+  <!-- SSP -->
+  <script type="text/javascript" src="SSPstochastics.js"></script>
+
   <!-- Local script -->
   <script type="text/javascript" src="js/slider.js"></script>
   <script type="text/javascript" src="js/plotly_resize.js"></script>
   <script type="text/javascript" src="js/local.js"></script>
+
 </body>
 <!-- Links to used scripts -->
 <!-- value for range https://css-tricks.com/value-bubbles-for-range-inputs/ -->
