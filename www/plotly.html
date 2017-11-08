@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content=
-  "user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
   <title>Plotly test in Cordova</title>
 
   <!-- Bootstrap -->
@@ -24,11 +23,12 @@
       <input class="range-slider__range" id="slide1" type="range" value="512" min="8" max="2048">
       <span class="range-slider__value">0</span>
     </div>
-</div>
+  </div>
 
-<div class="container-fluid">
-    <div class="col">
-      <div id="myDiv1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div id="myDiv1" class="responsive-plot"></div>
       </div>
     </div>
   </div>
@@ -43,6 +43,7 @@
 
   <!-- Local script -->
   <script type="text/javascript" src="js/slider.js"></script>
+  <script type="text/javascript" src="js/plotly_resize.js"></script>
   <script type="text/javascript" src="js/local.js"></script>
 </body>
 <!-- Links to used scripts -->
