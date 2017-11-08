@@ -1,0 +1,33 @@
+
+		<table id='radioTable'>
+			<tr>
+				<td>Filter experiments &rarr;&nbsp;</td>
+				<td> 
+
+					<!-- BP filtering Gaussian noise by direct convolution  -->
+					<input id='experim1' type='radio' name='distr'
+						onclick="myFunctionDist('6.8a');" value='1' checked>
+						<label for='experim1'><span><span></span></span>
+						1&nbsp;&nbsp;&nbsp;</label>
+						
+					<!-- BP filtering Gaussian noise by Fourier multiplication  -->
+					<input id='experim2' type='radio' name='distr'
+						onclick="myFunctionDist('2');" value='6.8b'>
+						<label for='experim2'><span><span></span></span>
+						2&nbsp;&nbsp;&nbsp;</label>
+						
+					<!-- Notch filtering Uniform noise by Fourier multiplication  -->
+					<input id='experim3' type='radio' name='distr'
+						onclick="myFunctionDist('3');" value='6.8c'>
+						<label for='experim3'><span><span></span></span>
+						3&nbsp;&nbsp;&nbsp;</label>
+						
+					<!-- Notch filtering Exponential noise by Fourier multiplication  -->
+					<input id='experim4' type='radio' name='distr'
+						onclick="myFunctionDist('4');" value='6.8d'>
+						<label for='experim4'><span><span></span></span>
+						4&nbsp;&nbsp;&nbsp;</label>
+				</td>
+			</tr>
+		</table>
+

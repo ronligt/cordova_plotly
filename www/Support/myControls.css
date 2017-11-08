@@ -1,0 +1,266 @@
+/*********************************************************
+
+	Dynamic controls for web pages
+	
+	Slider Designs: <http://danielstern.ca/range.css/#/>
+
+	Button Designs: <https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_color>
+	
+	Radio Button design: 
+<http://code.stephenmorley.org/html-and-css/styling-checkboxes-and-radio-buttons/>
+
+	ity Tuesday, 27 June 2017
+	ity Tuesday, 4 July 2017
+	ity Wednesday, 5 July 2017
+	
+	********************************************************
+*/
+
+/* Slider styling */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 19.7px 0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #3071a9;
+  border-radius: 5px;
+  border: 0.2px solid #000001;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 1.5px solid #000000;
+  height: 50px;
+  width: 30px;
+  border-radius: 25px;
+  background: #ffaeff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -19.9px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  background: #3071a9;
+  border-radius: 5px;
+  border: 0.2px solid #000001;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 1.5px solid #000000;
+  height: 50px;
+  width: 16px;
+  border-radius: 25px;
+  background: #ffaeff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 10px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #000001;
+  border-radius: 10px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #000001;
+  border-radius: 10px;
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+  border: 1.5px solid #000000;
+  height: 50px;
+  width: 16px;
+  border-radius: 25px;
+  background: #ffaeff;
+  cursor: pointer;
+  height: 9.6px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+
+/*  Added to permit sliders in table rows with multiple columns.
+    in this case each row <tr> has three columns <td>:
+    label, slider, output
+    
+    ity   Monday, 5 June 2017
+*/
+
+label {
+	font-size: inherit;
+	text-align: center;
+	}
+
+#sliderTable {
+	table-layout: fixed;
+	font-family: Georgia, Palatino, Bodoni, serif;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 1.8rem;  /* This is the base size for all fonts */
+	color: Maroon;
+	border-collapse: collapse;
+	width: 100%;
+	margin: auto;
+	background-color: white;
+	text-align: center;
+	}
+
+#sliderTable tr, #sliderTable td {
+	padding: 0.8rem;
+	margin: auto;
+	vertical-align: middle;
+	}
+
+#sliderTable td:nth-child(1) {
+	text-align: right;
+	width: 10%
+	}
+
+#sliderTable td:nth-child(2) {
+	text-align: center;
+	width: auto;
+	}
+
+#sliderTable td:nth-child(3) {
+	text-align: right;
+	width: 25%
+	}
+
+/* Button styling */
+.button
+	{
+	background-color: white;
+	border: none;
+	color: white;
+	padding: 1px 1px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 90%;
+	margin-top: 1px;
+	margin-right: 8px;
+	margin-bottom: 1px;
+	margin-left: 8px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
+	};
+	
+/* Radio buttons styling */
+/*
+Taken from:
+  <http://code.stephenmorley.org/html-and-css/styling-checkboxes-and-radio-buttons/>
+*/
+input[type=radio]:not(old)
+	{
+	display: none;
+	width : 4rem;  /* hide the old (system) buttons */
+	margin : 0;
+	padding : 0;
+	border : 0;
+	background : transparentl;
+	font-family: inherit;
+	font-size: 2rem;
+	cursor:	pointer;
+	opacity : 0;
+	}
+
+input[type=radio]:not(old) + label
+	{
+	display :		inline-block;
+	margin-left :	-4rem;  /* move outer circle towards left edge of container */
+	line-height :	6rem;  /* vertical distance between buttons */
+	}
+
+input[type=radio]:not(old) + label > span
+	{
+	display : inline-block;
+	width : 2.4rem;  /* width of outer circle */
+	height : 2.4rem;  /* height of outer circle */
+	border-radius : 1.2rem;  /* half of height/width to get circle */
+	border : 0.125rem solid rgb(29, 53, 73);
+	
+	margin-top: 1.5rem;
+	margin-right: 0.3rem;
+	margin-bottom: 3rem;
+	margin-left: 1.5rem;
+	
+	/* outer circle color before checked */
+	vertical-align : top;  /* seems to work better than 'bottom' */
+	background : rgb(108, 157, 198);
+	}
+
+input[type=radio]:not(old):checked + label > span
+	{  /* outer circle color after checked */
+	background :		rgb(50, 93, 129);
+	}
+
+input[type=radio]:not(old):checked + label > span > span
+	{
+	display :		block;
+	width :			1rem;  /* width of inner circle */
+	height :		1rem;  /* height of inner circle */
+	border-radius : 0.5rem;  /* half of height/width to get circle */
+	border :		0.125rem solid black;
+	margin :		0.6rem;  /* fiddle to get centered */
+	background :	#ffaeff;
+	}
+
+#radioTable {
+	table-layout: fixed;
+	font-family: Helvetica, Arial, GillSans, san-serif;
+	font-size: 1.8rem;
+	border-collapse: collapse;
+	width: auto;
+	margin: auto;
+	background-color: white;
+	text-align: center;
+	vertical-align: middle;
+	}
+
+#radioTable tr, #radioTable td {
+	font-size: inherit;
+	padding: 0.8rem;
+	margin: auto;
+	text-align: center;
+	border-collapse: collapse;
+	border-width: 0px;
+	border-color: blue;
+	border-style: dashed;
+	}
+
+#radioTable td:nth-child(1) {
+	text-align: right;
+	margin: auto;
+	}
+
+#radioTable td:nth-child(2) {
+	text-align: left;
+	margin: auto;
+	}
+
+

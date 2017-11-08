@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+	<head>
+		<meta charset='UTF-8'>
+		<title>Laboratory Experiment 6.8a</title>
+<!--	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>  -->
+		<script type='text/javascript' src='./Support/d3-format.min.js' charset='utf-8'></script>
+		<script type='text/javascript' src='./Support/plotly-latest.min.js' charset='utf-8'></script>
+		<link rel='stylesheet' type='text/css' href='./Support/myHTML_1.css' media='screen' />
+		<link rel='stylesheet' type='text/css' href='./Support/myControls.css' media='screen' />
+
+		<script src='./Support/Color LUTs.js'></script>
+
+		<script src='./SSPconstants.js'></script>
+		<script src='./SSPplotting.js'></script>
+		<script src='./SSPmath.js'></script>
+		<script src='./SSPfourier.js'></script>
+		<script src='./SSPstochastics.js'></script>
+
+		<script src='./Lab_6-8.js'></script>
+		<script src='./Lab_6-8a.js'></script>
+
+	</head>
+
+	<body>
+<!--
+	<p_mono>iPad screen width = up to 70</p_mono><br>
+<p_mono>123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 </p_mono><br><br>
+ -->
+
+		<table id='OneColumnTable'>
+			<tr>
+				<td>a) Press the "Acquire signal" icon to generate <output id="placeT">--</output> seconds of real, Gaussian-distributed noise G[n]. Press the filter icon to produce the filtered data G<sub>F</sub>[n]. The playback icons <i>within</i> the display window allow you to listen to G[n] and G<sub>F</sub>[n]. The slider allows you to zoom in to examine the signals in more detail.</td>
+			</tr>
+		</table><br>
+
+		<table id='buttonTable'>
+		<!-- Display of 1D noise and associated histogram  -->
+			<tr>
+				<td>
+					<button class='button' onclick="getData('acquire')">
+					<img id='buttonImg' src='./Support/icons/AntennaBlue.gif'>
+					</button>
+				</td>
+				<td>Acquire signal G[n]</td>
+				<td>Choose display &rarr;&nbsp;</td>
+				<!-- This is where 'dispState' gets set  -->
+				<td>
+					<br>
+					<!-- display noise signal & histogram = 'SH'  -->
+					<input id='disp1' type='radio' name='display' value='SH' checked
+						onclick="myFunctionDisp(this.value,'SH',
+						'Lab6.8aL1','Lab6.8aR1','Lab6.8aL2','Lab6.8aR2');" >
+						<label for='disp1'><span><span></span></span>
+						Signal & Histogram&nbsp;&nbsp;&nbsp;</label>
+
+					<!-- display correlation function & power spectal density = 'CP'  -->
+					<input id='disp2' type='radio' name='display' value='CP'
+						onclick="myFunctionDisp(this.value,'CP',
+						'Lab6.8aL1','Lab6.8aR1','Lab6.8aL2','Lab6.8aR2');");" >
+						<label for='disp2'><span><span></span></span>
+						&phi;(&tau;) & S(&Omega;)&nbsp;&nbsp;&nbsp;</label>
+				</td>
+			</tr>
+		</table>
+		<br>
+
+		<!-- Slider to choose Zoom  -->
+		<table id='sliderTable'>
+			<tr>
+				<td>Zoom: </td>
+				<td><input
+						type='range'
+						oninput="myFunctionZoom(this.value)"
+						min='0'
+						max='11'
+						step='1'
+						value='0'
+						id='zm'>
+				</td>
+				<td><output id="placeN1">N = ----- samples</output><br><output id="placeN2">= ----- [ms]</output></td>
+			</tr>
+		</table>
+
+		<!--L = left; R = right; -->
+		<table id='graphlegendtable'>
+		<!-- Display of 1D noise and associated histogram  -->
+			<tr>
+				<td>
+					<button class='button' onclick="myFunctionPlaySound(this.value, 'PlayOrig')">
+					<img id='buttonImg' src='./Support/icons/playback_60x60.gif'>
+					</button>
+				</td>
+				<td><div id='Lab6.8aL1'></div></td>
+				<td><div id='Lab6.8aR1'></div></td>
+			</tr>
+		</table>
+		<br>
+
+		<table id='buttonTable'>
+			<tr>
+				<td>
+					<button class='button' onclick="getData('filter')">
+					<img id='buttonImg' src='./Support/icons/FilterFunnel.gif'>
+					</button>
+				</td>
+				<td>Filter signal G[n] &rarr; G<sub>F</sub> [n]</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+
+		<table id='graphlegendtable'>
+			<tr>
+				<td>
+					<button class='button' onclick="myFunctionPlaySound(this.value, 'PlayFilt')">
+					<img id='buttonImg' src='./Support/icons/playback_60x60.gif'>
+					</button>
+				</td>
+				<td><div id='Lab6.8aL2'></div></td>
+				<td><div id='Lab6.8aR2'></div></td>
+			</tr>
+		</table>
+
+
+		<script>
+// *****************************************************************
+		//  Javascript starts here
+		//  'Lab6.8aL1' means Lab 6.8, part a, Left side, row 1
+		//  'Lab6.8aR2' means Lab 6.8, part a, Right side, row 2
+		// set up global variables
+
+		// four windows in 2 x 2 array
+		wA = 'Lab6.8aL1';
+		wB = 'Lab6.8aR1';
+		wC = 'Lab6.8aL2';
+		wD = 'Lab6.8aR2';
+
+		prepareLab_6_8( );
+		executeLab_6_8a( );
+		</script>
+	</body>
+</html>

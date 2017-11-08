@@ -1,0 +1,420 @@
+/*
+	********************************************************
+
+	Central repository for HTML CSS descriptions of table, divs, etc.
+	
+	GEORGIA is the font that is being used for text in the book. If not,
+	then PALATINO.
+	
+	There is an assumption that 16pt is the default size of fonts for all
+	browsers. This means to get to an easy size, the html font size is 62.5% =
+	5/8 of this = 10 pt = 1rem. Thus a display size of 22 pt (empirically determined
+	as an excellent choice) is 2.2 x 10 pt = 2.2rem.
+	
+	ity Wednesday, 28 June 2017
+	ity Wednesday, 5 July 2017
+	ity Monday, 7 August 2017
+	Tuesday, 8 August 2017
+	Tuesday, 15 August 2017
+	Thursday, 24 August 2017
+	Sunday, 3 September 2017
+	Wednesday, 13 September 2017
+	Thursday, 14 September 2017
+	Monday, 25 September 2017
+	Wednesday, 27 September 2017
+
+	********************************************************
+*/
+
+	/* General definitions */
+		html {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 62.5%;  /* 10px is the base size  for all fonts */
+			margin: 0;
+			text-align: center;
+			width: 100%;
+			height: 100%;
+			padding: 0;
+			background-color: white;
+			}
+		
+		body {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 22px = 1 em */
+			margin: 20px 2.5%;
+			text-align: justify;
+			text-justify: inter-word;
+			background-color: white;
+			}
+		
+		p {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: inherit;
+			text-align: left;
+			}
+		
+		p_serif {
+			font-family: Georgia, Palatino, Bodoni, serif;
+			font-size: inherit;
+			text-align: left;
+			}
+		
+		p_serif_cntr {
+			font-family: Georgia, Palatino, Bodoni, serif;
+			font-size: inherit;
+			font-style: italic;
+			text-align: center;
+			}
+		
+		p_mono {
+			font-family: Courier, Lucida, Console, monospace-serif;
+			font-size: inherit;
+			text-align: left;
+			}
+		
+		.super{
+			vertical-align: super;
+			font-size: 1.8rem; /* 85% */
+			}
+			
+		.sub{
+			vertical-align: sub;
+			font-size: 1.8rem; /* 85% */
+			}
+		
+		div {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: inherit;
+			text-align: center;
+			margin: auto;
+			}
+		
+		h3	{
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 4.9rem; /* 1.4em */
+			font-weight: bold;
+			font-variant: small-caps;
+			color: steelblue;
+			}
+			
+		h4	{
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 3.0rem; /* 1.2em */
+			font-weight: bold;
+			font-variant: small-caps;
+			color: green;
+			}
+			
+		h5	{
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			font-weight: bold;
+			color: green;
+			}
+			
+		#OneColumnTable {
+			table-layout: fixed;
+			font-family: Georgia, Palatino, Bodoni, serif;
+			font-style: normal;
+			text-align: justify;
+			font-size: 2.2rem; /* 0.8em */
+			width: 100%;
+			margin: auto;
+			background-color: white;
+			border: 0px dashed Maroon;
+			border-collapse: collapse;
+			}
+	
+		#twoColumnTable {
+			table-layout: fixed;
+			font-family: Georgia, Palatino, Bodoni, serif;
+			font-style: italic;
+			font-weight: bold;
+			text-align: left;
+			font-size: 1.8rem; /* 0.8em */
+			width: 100%;
+			margin: auto;
+			background-color: white;
+			border: 0px dashed Maroon;
+			border-collapse: collapse;
+			color: Maroon;
+			}
+	
+		#twoColumnTable td:nth-child(1) {
+			text-align: left;
+			}
+			
+		#twoColumnTable td:nth-child(2) {
+			text-align: right;
+			}
+			
+		#buttonTable {
+			table-layout: fixed;
+			font-family: Georgia, Palatino, Bodoni, serif;
+			font-style: italic;
+			font-weight: bold;
+			text-align: left;
+			font-size: 1.8rem; /* 0.8em */
+			width: 100%;
+			margin: auto;
+			background-color: white;
+			border: 0px dashed blue;
+			border-collapse: collapse;
+			}
+
+		#buttonTable td:nth-child(1) {
+			width: 75px;
+			}
+			
+		#buttonTable td:nth-child(2) {
+			width: auto;
+			}
+			
+		#buttonTable td:nth-child(3) {
+			text-align: center;
+			width: 15%;
+			}
+			
+		#buttonTable td:nth-child(4) {
+			text-align: right;
+			width: 45%;
+			}
+			
+		#buttonImg {
+			width: auto;
+			height: auto;
+			}
+		
+		#buttonImg:hover {
+			border: 0px solid rgba(53, 105, 201, 0.5);  /* unused */
+			border-radius: 8px;
+			-webkit-filter: hue-rotate(120deg); /* Safari */
+			filter: hue-rotate(120deg);
+			}
+
+/* *******************************************************************
+   checked until here
+
+*/
+
+/* 
+		output	{
+			font-size: inherit;
+			}
+ */
+			
+		ol	{
+			list-style-position: inside;
+			list-style-type: lower-roman;
+			background: #cceeff;
+			margin-left: 20;
+			margin-right: 20;
+			margin-bottom: 20;
+			padding: 10;
+			}
+			
+			
+		/* T = top; B = bottom */
+		#subDivT, {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			text-align: center;
+			margin: auto;
+			}
+		
+		#subDivB{
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			text-align: center;
+			margin: auto;
+			}
+		
+	/* TL = top, left; TR = top, right; BL = bottom, left; BR = bottom, right */
+		#subDivTL, #subDivTR, #subDivBL, #subDivBR {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			text-align: center;
+			margin: auto;
+			}
+		
+		#subDivtextTL, #subDivtextBL {
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			font-weight: normal;
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			text-align: center;
+			vertical-align: middle;
+			margin: auto;
+			}
+		
+	/* Laboratory exercises have a layout defined here */
+		#labExerTable {
+			font-family: Georgia, Palatino, Bodoni, serif;
+			border-collapse: collapse;
+			background-color: yellow;
+			text-align: left;
+			width: auto;
+			margin: auto;
+			}
+		
+		#labExerTable tr, #labExerTable td, #labExerTable th	{
+			padding: 0.5em;
+			text-align: left;
+			}
+		
+		#labExerTable td:nth-child(1) {
+			text-align: center;
+			}
+		
+		#labExerTable td:nth-child(2) {
+			text-align: center;
+			width: 5%
+			}
+		
+		#labExerTable td:nth-child(3) {
+			text-align: left;
+			width: 75%
+			}
+		
+		#labExerTable tr:nth-child(odd) {
+			font-style: bold;
+			text-align: left;
+			background-color: white;
+			border: 0.15em solid Maroon;
+			}
+		
+		#labExerTable tr:nth-child(even) {
+			font-style: bold;
+			text-align: left;
+			background-color: white;
+			}
+		
+		#micPlayTable {
+			table-layout: fixed;
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2rem; /* 0.9em */
+			font-style: bold;
+			width: auto;
+			margin: auto;
+			border: 0px solid Maroon collapse;
+			background-color: white;
+			text-align: center;
+			}
+	
+		#micPlayTable td:nth-child(1) {
+			text-align: center;
+			font-size: inherit;
+			width: 20%
+			}
+		
+		#micPlayTable td:nth-child(2) {
+			text-align: center;
+			font-size: inherit;
+			}
+		
+		#micPlayTable td:nth-child(3) {
+			text-align: center;
+			font-size: inherit;
+			width: 20%
+			}
+		
+		/* Graphs have a layout defined here */
+		#singleGraphTable {
+			table-layout: fixed;
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			font-style: bold;
+			width: auto;
+			margin: auto;
+			background-color: white;
+			text-align: center;
+			border: 0px solid Maroon;
+			border-collapse: collapse;
+			}
+	
+		#graphlegendtable, #corrPSDtable {
+			padding: 0em;
+			table-layout: fixed;
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: inherit;
+			width: auto;
+			margin: auto;
+			background-color: white;
+			text-align: center;
+			border: 0px dashed blue;
+			border-collapse: collapse;
+			}
+	
+		#graphlegendtable tr, #graphlegendtable td {
+			padding: 0em;
+			margin: auto;
+			text-align: center;
+			border: 0px solid Maroon;
+			border-collapse: collapse;
+			}
+		
+		#standardTable {
+			padding: 0em;
+			table-layout: fixed;
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: inherit;
+			width: auto;
+			margin: auto;
+			background-color: white;
+			text-align: center;
+			border: 0px solid Maroon;
+			border-collapse: collapse;
+			}
+	
+		#standardTable tr, #standardTable td {
+			padding: 0em;
+			margin: auto;
+			text-align: center;
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			}
+		
+		#corrPSDtable tr, #corrPSDtable td {
+			padding: 0em;
+			margin-top: auto;
+			margin-bottom: auto;
+			margin-left: 0em;
+			margin-right: 0em;
+			text-align: center;
+			border: 0px solid Maroon;
+			border-collapse: collapse;
+			}
+		
+		#graphPlayTable {
+			table-layout: fixed;
+			font-family: Helvetica, Arial, GillSans, san-serif;
+			font-size: 2.2rem; /* 1em */
+			font-style: bold;
+			width: auto;
+			margin: auto;
+			background-color: white;
+			text-align: center;
+			border: 1px solid Maroon;
+			border-collapse: collapse;
+			}
+		
+		#graphPlayTable td:nth-child(1) {
+			text-align: left;
+			}
+		
+		#graphPlayTable td:nth-child(2) {
+			text-align: center;
+			}
+		
+		#graphPlayTable td:nth-child(3) {
+			text-align: right;
+			}
+		
+

@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="css/ssp.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_SVG" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
+  
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    // These are turned off due to the problem with the die in the formula...
+    //CommonHTML: { linebreaks: { automatic: true } },
+    //"HTML-CSS": { linebreaks: { automatic: true } },
+    SVG: { linebreaks: { automatic: true } },
+    TeX: {
+  	extensions: ["color.js"],
+    },
+    
+  });
+  </script>
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-lg-12">
+<span class="math inline" style="display:none;">
+\[
+\definecolor{example}{gray}{0.6}
+\definecolor{mainresultcolor}{rgb}{1,0.6,1}
+\definecolor{specialresultcolor}{rgb}{1,1,0.2}
+\definecolor{graphsignalcolor}{rgb}{1,0.6,0}
+
+\def\stoch{\color{black}}
+\def\deter{\color{blue}}
+\def\graph{\color{graphsignalcolor}}
+\def\examp{\color{example}}
+\def\probl{\color{cyan}}
+\def\labex{\color{cyan}}
+
+\def\smallHTML{\small}
+\def\scriptsizeHTML{\scriptsize}
+\def\tinyHTML{\tiny}
+
+\newcommand{\mainresult}[1]{
+	\colorbox{mainresultcolor}{$#1$}
+}
+\newcommand{\specialresult}[1]{
+	\colorbox{specialresultcolor}{$#1$}
+}
+\]
+</span>
+<nav id="TOC">
+<h1>Contents</h1>
+<ul>
+<li><a href="#filtering-of-stochastic-signals"><span class="toc-section-number">1</span> Filtering of Stochastic Signals</a><ul>
+<li><a href="#interpretation-of-the-convolution-result"><span class="toc-section-number">1.1</span> Interpretation of the convolution result</a></li>
+<li><a href="#the-mean"><span class="toc-section-number">1.2</span> The mean</a></li>
+<li><a href="#the-autocorrelation-function"><span class="toc-section-number">1.3</span> The autocorrelation function</a></li>
+<li><a href="#the-cross-correlation-function"><span class="toc-section-number">1.4</span> The cross-correlation function</a></li>
+<li><a href="#problems"><span class="toc-section-number">1.5</span> Problems</a></li>
+<li><a href="#laboratory-exercises"><span class="toc-section-number">1.6</span> Laboratory Exercises</a></li>
+</ul></li>
+</ul>
+</nav>
+<hr>
+<h1 id="filtering-of-stochastic-signals"><span class="header-section-number">1</span> Filtering of Stochastic Signals</h1>
+<p>We now have the tools necessary to describe what happens when a stochastic signal is processed through a linear, time-invariant (LTI) system. These tools consist of measures on the random signals which describe and<em>/</em>or characterize the signals. The two most important of these are the mean value of the signal and the autocorrelation function of the signal. Further, we can characterize the relation between two random signals through the cross-correlation function. In all of our discussions <em>we will assume that our random processes are complex as well as ergodic (and thus stationary)</em>.</p>
+<p>We recall that:</p>
+<div id="eq:review_acorr" class="math">
+<div id="eq:review_acorr">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{xx}}[k]}&amp;{ = E\left\{ {x[n]\,{x^*}[n + k]} \right\}}\\
+{\,\,\,}&amp;{ = \; &lt; x[n]\,{x^*}[n + k] &gt; \;}\\
+{\,\,\,}&amp;\begin{array}{l}
+ = \mathop {\lim }\limits_{N \to \infty } \frac{1}{{2N + 1}}\sum\limits_{n =  - N}^{ + N} {x[n]\,{x^*}[n + k]} \\
+\,\,\,
+\end{array}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.1)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="eq:review_crosscorr" class="math">
+<div id="eq:review_crosscorr">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{l}
+\begin{array}{*{20}{l}}
+{{\varphi _{xy}}[k]}&amp;{ = E\left\{ {x[n]\,{y^*}[n + k]} \right\}}\\
+{\,\,\,}&amp;{ = \; &lt; x[n]\,{y^*}[n + k] &gt; \;}\\
+{\,\,\,}&amp;{ = \mathop {\lim }\limits_{N \to \infty } \frac{1}{{2N + 1}}\sum\limits_{n =  - N}^{ + N} {x[n]\,{y^*}[n + k]} }
+\end{array}\\
+\,\,\,
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.2)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="eq:review_mean" class="math">
+<div id="eq:review_mean">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{m_x}}&amp;{ = E\left\{ {x[n]} \right\} = \; &lt; x[n] &gt; }\\
+{\,\,\,}&amp;{ = \mathop {\lim }\limits_{N \to \infty } \frac{1}{{2N + 1}}\sum\limits_{n =  - N}^{ + N} {x[n]} }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.3)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>To understand what happens when stochastic signals are processed by LTI systems, let us begin with discrete-time convolution.</p>
+<h2 id="interpretation-of-the-convolution-result"><span class="header-section-number">1.1</span> Interpretation of the convolution result</h2>
+<p>First we can say that the relation between input and output is still given by the convolution sum, that is, we can write the input as:</p>
+<div id="eq:review_conv1" class="math">
+<div id="eq:review_conv1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[x[n] = \sum\limits_{k =  - \infty }^{ + \infty } {x[k]\,\delta [n - k]}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.4)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The total signal is a weighted sum of unit impulse functions where the weights <span class="math inline">\(\left\{ {x[k]} \right\}\)</span> have random values according to some probability function. The basic concepts of convolution theory, as argued below, still hold. As a reminder of what <a href="#eq:review_conv1">eq. 1.4</a> means, see <a href="#fig:label6">fig. <strong>¿fig:label6?</strong></a><span class="todo">Figure 3.1.</span></p>
+<p>The deterministic impulse function <span class="math inline">\(\delta [n]\)</span> produces the impulse response <span class="math inline">\(h[n]\)</span> from the LTI system. A delayed version <span class="math inline">\(\delta [n - k]\)</span> produces a delayed output <span class="math inline">\(h[n - k]\)</span>. Multiplication of the input by a scale factor produces multiplication of the output by the same factor <em>even if that factor is a random variable</em>.</p>
+<p>Thus <span class="math inline">\(x[k]\,\delta [n - k]\)</span> will produce <span class="math inline">\(x[k]\,h[n - k]\)</span> as an output. Because the input <span class="math inline">\(x[n]\)</span> can be expressed as the sum of inputs of this form, we can apply the linearity conditions, <a href="#eq:additive">eq. <strong>¿eq:additive?</strong></a> <span class="todo">Eq. 4.13</span> and <a href="#eq:homogeneous">eq. <strong>¿eq:homogeneous?</strong></a> <span class="todo">Eq. 4.14</span>, to write the output as:</p>
+<div id="eq:review_conv2" class="math">
+<div id="eq:review_conv2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[y[n] = \sum\limits_{k =  - \infty }^{ + \infty } {x[k]\,h[n - k]}  = x[n] \otimes h[n]\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.5)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The model for this situation is shown in <a href="#fig:filt_noise">fig. 1.1</a>.</p>
+<figure>
+<img src="images/Fig_6_1.png" alt="Figure 1.1: A stochastic signal x[n] filtered by a deterministic LTI filter h[n] to produce a stochastic output signal y[n]." id="fig:filt_noise" class="fullsize" /><figcaption>Figure 1.1: A stochastic signal <span class="math inline">\(x[n]\)</span> filtered by a deterministic LTI filter <span class="math inline">\(h[n]\)</span> to produce a stochastic output signal <span class="math inline">\(y[n]\)</span>.</figcaption>
+</figure>
+<p>It is easy to see from <a href="#eq:review_conv2">eq. 1.5</a> that <span class="math inline">\(y[n]\)</span> will be a stochastic signal if <span class="math inline">\(x[n]\)</span> is a stochastic signal. The questions now arise:</p>
+<div class="indentlist">
+<ol type="1">
+<li>If the input mean is <span class="math inline">\({m_x}\)</span>, what is the output mean <span class="math inline">\({m_y}\)</span>?</li>
+<li>If the input autocorrelation function is <span class="math inline">\({\varphi _{xx}}[k]\)</span>, what form does the output autocorrelation function <span class="math inline">\({\varphi _{yy}}[k]\)</span> have?</li>
+<li>Assuming that the input is stationary, is the output also stationary?</li>
+</ol>
+</div>
+<h2 id="the-mean"><span class="header-section-number">1.2</span> The mean</h2>
+<p>Using the standard definition we have:</p>
+<div id="eq:filt_mean1" class="math">
+<div id="eq:filt_mean1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{m_y}}&amp;{ = E\left\{ {y[n]} \right\} = E\left\{ {\sum\limits_{k =  - \infty }^{ + \infty } {x[k]\,h[n - k]} } \right\}}\\
+{\,\,\,}&amp;{ = \sum\limits_{k =  - \infty }^{ + \infty } {E\left\{ {x[k]\,h[n - k]} \right\}} }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.6)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This last statement is true because, as we have observed earlier in <a href="#eq:additive">eq. <strong>¿eq:additive?</strong></a><span class="todo">Eq. 4.13</span>, the averaging operator (or expectation operator) distributes over addition.</p>
+<p>Only the weights <span class="math inline">\(\left\{ {x[k]} \right\}\)</span> are random variables. The impulse response, <span class="math inline">\(h[n]\)</span>, of the LTI system is <em>not</em> random and the term <span class="math inline">\(h[n - k]\)</span> is a constant with respect to the averaging process over the random variable <span class="math inline">\(x[k]\)</span>. We can, therefore, rewrite this equation as:</p>
+<div id="eq:filt_mean2" class="math">
+<div id="eq:filt_mean2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{m_y} = \sum\limits_{k =  - \infty }^{ + \infty } {E\left\{ {x[k]\,h[n - k]} \right\}}  = \sum\limits_{k =  - \infty }^{ + \infty } {E\left\{ {x[k]} \right\}\,} h[n - k]\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.7)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Because the random process <span class="math inline">\(\left\{ {x[k]} \right\}\)</span> is stationary (independent of <span class="math inline">\(n\)</span>) we have:</p>
+<div id="eq:filt_mean3" class="math">
+<div id="eq:filt_mean3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{m_y}}&amp;{ = \sum\limits_{k =  - \infty }^{ + \infty } {E\left\{ {x[k]} \right\}h[n - k]}  = \sum\limits_{k =  - \infty }^{ + \infty } {{m_x}h[n - k]} }\\
+{\,\,\,}&amp;{ = {m_x}\sum\limits_{k =  - \infty }^{ + \infty } {h[n - k]} }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.8)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Using the Fourier transform of the impulse response <span class="math inline">\(H(\Omega ) = F\left\{ {h[n]} \right\}\)</span> (<a href="#eq:label3">eq. <strong>¿eq:label3?</strong></a><span class="todo">Eq. 3.3</span>), this expression simplifies to:</p>
+<div id="eq:filt_mean4" class="math">
+<div id="eq:filt_mean4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{\begin{array}{*{20}{l}}
+{{m_y}}&amp;{ = {m_x}\sum\limits_{k =  - \infty }^{ + \infty } {h[n - k]}  = {m_x}\sum\limits_{n =  - \infty }^{ + \infty } {h[n]} }\\
+{\,\,\,}&amp;{ = {m_x}H(\Omega  = 0)}
+\end{array}} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.9)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><em>What does this mean?</em> From our knowledge of LTI filter theory, the expression <span class="math inline">\({m_y} = {m_x}H(\Omega = 0)\)</span> makes sense. The expression says the average value of the input random signal is multiplied by the constant gain factor—the gain at (<span class="math inline">\(\Omega = 0\)</span>)—of the linear filter. Because the average value is, indeed, just a constant (DC) value, the non-fluctuating component, this is a realistic result. Note that <span class="math inline">\(H(\Omega )\)</span>, <span class="math inline">\({m_x}\)</span> and <span class="math inline">\({m_y}\)</span> are all complex in this derivation.</p>
+<p>We also see through this derivation that, because the input average is stationary, the output average is also stationary.</p>
+<h2 id="the-autocorrelation-function"><span class="header-section-number">1.3</span> The autocorrelation function</h2>
+<p>The development of the output correlation proceeds along similar lines:</p>
+<div id="eq:filt_acorr1" class="math">
+<div id="eq:filt_acorr1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{l}
+{\varphi _{yy}}[n,n + k] = E\left\{ {y[n]{y^*}[n + k]} \right\}\\
+\,\,\,\,\,\,\,\, = E\left\{ {\left( {\sum\limits_{m  =  - \infty }^{ + \infty } {h[m ]x[n - m ]} } \right)\left( {\sum\limits_{r =  - \infty }^{ + \infty } {{h^*}[r]{x^*}[n + k - r]} } \right)} \right\}\\
+\,\,\,\,\,\,\,\, = E\left\{ {\sum\limits_{m  =  - \infty }^{ + \infty } {\sum\limits_{r =  - \infty }^{ + \infty } {h[m ]{h^*}[r]x[n - m ]{x^*}[n + k - r]} } } \right\}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.10)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Using the distributive property once again:</p>
+<div id="eq:filt_acorr2" class="math">
+<div id="eq:filt_acorr2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{yy}}[n,n + k] = \sum\limits_{m  =  - \infty }^{ + \infty } {\sum\limits_{r =  - \infty }^{ + \infty } {h[m ]{h^*}[r]E\left\{ {x[n - m ]{x^*}[n + k - r]} \right\}} }\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.11)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The term within the expectation braces <span class="math inline">\(E\left\{ \bullet \right\}\)</span> yields <span class="math inline">\({\varphi _{xx}}[k + m - r]\)</span> producing:</p>
+<div id="eq:filt_acorr3" class="math">
+<div id="eq:filt_acorr3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{yy}}[n,n + k] = \sum\limits_{m  =  - \infty }^{ + \infty } {\sum\limits_{r =  - \infty }^{ + \infty } {h[m ]{h^*}[r]{\varphi _{xx}}[k + m  - r]} }\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.12)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Because <span class="math inline">\(m\)</span> and <span class="math inline">\(r\)</span> in <a href="#eq:filt_acorr3">eq. 1.12</a> are simply dummy variables that disappear when the two sums are performed, the result of the double sum, <span class="math inline">\({\varphi _{yy}}\)</span>, will only be a function of <span class="math inline">\(k\)</span> and, of course, the precise forms of the impulse response <span class="math inline">\(h[n]\)</span> and the autocorrelation function <span class="math inline">\({\varphi _{xx}}\)</span>.</p>
+<p>If the right side of <a href="#eq:filt_acorr3">eq. 1.12</a> is only a function of <span class="math inline">\(k\)</span> then the left side is only a function of <span class="math inline">\(k\)</span>, as well, and we have:</p>
+<div id="eq:filt_acorr4" class="math">
+<div id="eq:filt_acorr4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{yy}}[n,n + k] = {\varphi _{yy}}[k] = \sum\limits_{m =  - \infty }^{ + \infty } {\sum\limits_{r =  - \infty }^{ + \infty } {h[m ]{h^*}[r]{\varphi _{xx}}[k + m - r]} }\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.13)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>From this we can conclude that if <span class="math inline">\({\varphi _{xx}}[ \bullet ]\)</span> is stationary then <span class="math inline">\({\varphi _{yy}}[ \bullet ]\)</span> is stationary. We can go further. If we set <span class="math inline">\(n = r - m\)</span>, then:</p>
+<div id="eq:filt_acorr5" class="math">
+<div id="eq:filt_acorr5">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{yy}}[k]}&amp;{ = \sum\limits_{m =  - \infty }^{ + \infty } {\sum\limits_{n =  - \infty }^{ + \infty } {h[m]{h^*}[m + n]{\varphi _{xx}}[k - n]} } }\\
+{\,\,\,}&amp;{ = \sum\limits_{n =  - \infty }^{ + \infty } {{\varphi _{xx}}[k - n]} \left( {\sum\limits_{m =  - \infty }^{ + \infty } {h[m]{h^*}[m + n]} } \right)}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.14)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We recognize from ordinary (deterministic) signal processing theory that the term within parentheses is the autocorrelation of the impulse response. If this autocorrelation is <span class="math inline">\({\varphi _{hh}}[m]\)</span> then:</p>
+<div id="eq:filt_acorr6" class="math">
+<div id="eq:filt_acorr6">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{{\varphi _{yy}}[k] = \sum\limits_{m =  - \infty }^{ + \infty } {{\varphi _{xx}}[k - m]} {\varphi _{hh}}[m] = {\varphi _{xx}}[k] \otimes {\varphi _{hh}}[k]} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.15)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Our conclusion is that the autocorrelation of the output is stationary and is the convolution of the autocorrelation function of the (random) input signal with the autocorrelation function of the (deterministic) impulse response.</p>
+<h2 id="the-cross-correlation-function"><span class="header-section-number">1.4</span> The cross-correlation function</h2>
+<p>Finally we can derive the cross-correlation between the input and output as:</p>
+<div id="eq:filt_crosscorr1" class="math">
+<div id="eq:filt_crosscorr1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{xy}}[k]}&amp;{ = E\left\{ {x[n]{y^*}[n + k]} \right\}}\\
+{\,\,\,}&amp;{ = E\left\{ {x[n]\left( {\sum\limits_{m =  - \infty }^{ + \infty } {{h^*}[m ]{x^*}[n + k - m]} } \right)} \right\}}\\
+{\,\,\,}&amp;{ = \sum\limits_{m =  - \infty }^{ + \infty } {{h^*}[m ]E\left\{ {x[n]{x^*}[n + k - m]} \right\}} }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.16)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Once again, the term within the expectation braces gives the stationary autocorrelation function <span class="math inline">\({\varphi _{xx}}[k - m]\)</span>. Continuing,</p>
+<div id="eq:filt_crosscorr2" class="math">
+<div id="eq:filt_crosscorr2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{{\varphi _{xy}}[k] = \sum\limits_{m =  - \infty }^{ + \infty } {{h^*}[m]} {\varphi _{hh}}[k - m] = {h^*}[k] \otimes {\varphi _{xx}}[k]} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.17)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The cross-correlation function is stationary and is the convolution of the complex conjugate of the (deterministic) impulse response with the autocorrelation function of the (random) input signal.</p>
+<p>We can now express the Fourier transforms of <span class="math inline">\({\varphi _{xx}}[k]\)</span> and <span class="math inline">\({\varphi _{yy}}[k]\)</span> in terms of known quantities.</p>
+<div id="eq:filt_crosspds1" class="math">
+<div id="eq:filt_crosspds1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{S_{yy}}(\Omega )}&amp;{ = F\left\{ {{\varphi _{yy}}[k]} \right\} = F\left\{ {{\varphi _{xx}}[k] \otimes {\varphi _{hh}}[k]} \right\}}\\
+{\,\,\,}&amp;{ = {S_{xx}}(\Omega )\;{S_{hh}}(\Omega )}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.18)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>But using the result from Fourier theory that <span class="math inline">\(F\left\{ {{h^*}[n]} \right\} = {H^*}\left( { - \Omega } \right)\)</span> gives:</p>
+<div id="eq:filt_crosspds2" class="math">
+<div id="eq:filt_crosspds2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{S_{hh}}(\Omega )}&amp;{ = F\left\{ {\sum\limits_{m =  - \infty }^{ + \infty } {h[m]{h^*}[m + n]} } \right\}}\\
+{\,\,\,}&amp;{ = H( - \Omega )\;{H^*}( - \Omega ) = {{\left| {H( - \Omega )} \right|}^2}}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.19)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Therefore,</p>
+<div id="eq:filt_crosspds3" class="math">
+<div id="eq:filt_crosspds3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{{S_{yy}}(\Omega ) = {\left| {H( - \Omega )} \right|^2}{S_{xx}}(\Omega )} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.20)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>If the impulse response <span class="math inline">\(h[n]\)</span> of the deterministic system is <em>real</em>, then this is equivalent to:</p>
+<div id="eq:filt_crosspds4" class="math">
+<div id="eq:filt_crosspds4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\specialresult{{S_{yy}}(\Omega ) = {\left| {H(\Omega )} \right|^2}{S_{xx}}(\Omega )} % end class specialresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.21)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Returning to the complex form of <span class="math inline">\(h[n]\)</span>, the cross power density spectrum can be similarly shown to be:</p>
+<div id="eq:filt_crosspds5" class="math">
+<div id="eq:filt_crosspds5">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{{S_{xy}}(\Omega ) = {H^*}( - \Omega ){S_{xx}}(\Omega )} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.22)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Again, if the impulse response <span class="math inline">\(h[n]\)</span> of the deterministic system is <em>real</em>, then this is equivalent to:</p>
+<div id="eq:filt_crosspds6" class="math">
+<div id="eq:filt_crosspds6">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\specialresult{{S_{xy}}(\Omega ) = H(\Omega ){S_{xx}}(\Omega )} % end class specialresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.23)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Based upon the use of these results we are now in a position to provide an interpretation of the power spectrum <span class="math inline">\({S_{xx}}(\Omega )\)</span>.</p>
+<p>We see from <a href="#eq:meansqpos">eq. <strong>¿eq:meansqpos?</strong></a><span class="todo">Eq. 5.3</span> that for <span class="math inline">\(k = 0\)</span>:</p>
+<div id="eq:powerpos0" class="math">
+<div id="eq:powerpos0">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{xx}}[0] = E\left\{ {x[n]{x^*}[n]} \right\}\; = E\left\{ {{{\left| {x[n]} \right|}^2}} \right\}\; \ge 0\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.24)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Similarly <span class="math inline">\({\varphi _{yy}}[k] \ge 0\)</span> and</p>
+<div id="eq:powerpos1" class="math">
+<div id="eq:powerpos1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{yy}}[0]}&amp;{ = \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{S_{yy}}(\Omega )} d\Omega }\\
+{\,\,\,}&amp;{ = \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{{\left| {H( - \Omega )} \right|}^2}{S_{xx}}(\Omega )} d\Omega }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.25)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Let <span class="math inline">\(H(\Omega )\)</span> be a (complex) bandpass filter (as shown in <a href="#fig:filt_power">fig. 1.2</a>) such that within the pass-band the spectrum <span class="math inline">\({S_{xx}}(\Omega )\)</span> is essentially constant.</p>
+<figure>
+<img src="images/Fig_6_2.png" alt="Figure 1.2: Power spectrum {S_{xx}}(\Omega ) (n dark red) and a linear, bandpass filter {\left| {H(\Omega )} \right|^2} (in dark green). The filter has width \Delta \Omega and is centered at {\Omega _o}." id="fig:filt_power" class="fullsize" /><figcaption>Figure 1.2: Power spectrum <span class="math inline">\({S_{xx}}(\Omega )\)</span> (n dark red) and a linear, bandpass filter <span class="math inline">\({\left| {H(\Omega )} \right|^2}\)</span> (in dark green). The filter has width <span class="math inline">\(\Delta \Omega\)</span> and is centered at <span class="math inline">\({\Omega _o}\)</span>.</figcaption>
+</figure>
+<p>For complex random processes <span class="math inline">\({\varphi _{xx}}[k] = \varphi _{xx}^*[ - k]\)</span>, <a href="#eq:autoeven">eq. <strong>¿eq:autoeven?</strong></a><span class="todo">Eq. 5.5</span>, which means that <span class="math inline">\({S_{xx}}(\Omega )\)</span> is <em>real</em> (<a href="#eq:proveSreal">eq. <strong>¿eq:proveSreal?</strong></a>)<span class="todo">Eq. 5.26</span>. For a sufficiently small passband <span class="math inline">\(\Delta \Omega\)</span>, we can write:</p>
+<div id="eq:powerpos2" class="math">
+<div id="eq:powerpos2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{yy}}[0]}&amp;{ = \frac{1}{{2\pi }}{S_{yy}}(\Omega  = {\Omega _0})\Delta \Omega }&amp;{ \ge 0}\\
+{\,\,\,}&amp;{ = \frac{1}{{2\pi }}{{\left| {H( - {\Omega _0})} \right|}^2}{S_{xx}}({\Omega _0})\Delta \Omega }&amp;{ \ge 0}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.26)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Because <span class="math inline">\({S_{xx}}(\Omega )\)</span> is real, we immediately have that</p>
+<div id="eq:powerpos3" class="math">
+<div id="eq:powerpos3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{S_{xx}}({\Omega _0}) \ge 0\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.27)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>for all choices of <span class="math inline">\({\Omega _0}\)</span>.</p>
+<p>Further <span class="math inline">\({\left| {y[n]} \right|^2}\)</span> is (by definition) the instantaneous power in a signal (including random signals) and thus <span class="math inline">\({\varphi _{yy}}[0] = E\left\{ {{{\left| {y[n]} \right|}^2}} \right\}\)</span> is the expected power in the output signal at any instant. This means that:</p>
+<div id="eq:powerpos4" class="math">
+<div id="eq:powerpos4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{yy}}[0]}&amp;{ = \frac{1}{{2\pi }}{S_{yy}}({\Omega _0})\Delta \Omega }\\
+{\,\,\,}&amp;{ = \frac{1}{{2\pi }}{{\left| {H( - {\Omega _0})} \right|}^2}{S_{xx}}({\Omega _0})\Delta \Omega }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.28)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>has the unit of power [Watts]. <span class="math inline">\({S_{xx}}(\Omega )\)</span> like <span class="math inline">\({S_{yy}}(\Omega )\)</span> is, therefore, expressed in Watts per unit frequency [Watts<em>/</em>Hz] and is thus a <em>power density spectrum</em>.</p>
+<p>Other interesting and useful results can also be derived at this point:</p>
+<p>1) We would like to show that the maximum value of the autocorrelation function occurs at <span class="math inline">\(k = 0\)</span>. We begin with:</p>
+<div id="eq:max_acorr1" class="math">
+<div id="eq:max_acorr1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{xx}}[k] = \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{S_{xx}}(\Omega )} {e^{j\Omega k}}d\Omega\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.29)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Taking the absolute value of both sides:</p>
+<div id="eq:max_acorr2" class="math">
+<div id="eq:max_acorr2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{\left| {{\varphi _{xx}}[k]} \right|}&amp;{ = \frac{1}{{2\pi }}\left| {\int\limits_{ - \pi }^{ + \pi } {{S_{xx}}(\Omega )} {e^{j\Omega k}}d\Omega } \right|}\\
+{\,\,\,}&amp;{ \le \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {\left| {{S_{xx}}(\Omega )} \right|} \left| {{e^{j\Omega k}}} \right|d\Omega }
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.30)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The inequality holds because the absolute value of an integral is always less than (or equal to) the integral of the absolute value. This is easy to see if we consider the integral as a way of measuring the area under a curve. The total area will be greater if we first make all contributions positive.</p>
+<p>Because <span class="math inline">\(\left| {{e^{j\Omega k}}} \right| = 1\)</span> and because the power spectrum is real and everywhere positive (<a href="#eq:powerpos3">eq. 1.27</a>) we have:</p>
+<div id="eq:max_acorr3" class="math">
+<div id="eq:max_acorr3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{\left| {{\varphi _{xx}}[k]} \right|}&amp;{ \le \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {\left| {{S_{xx}}(\Omega )} \right|} d\Omega }\\
+{\,\,\,}&amp;{ = \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{S_{xx}}(\Omega )} d\Omega  = {\varphi _{xx}}[0]}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.31)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Finally,</p>
+<div id="eq:max_acorr4" class="math">
+<div id="eq:max_acorr4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[
+\mainresult{\left| {{\varphi _{xx}}[k]} \right| \le {\varphi _{xx}}[0]} % end class mainresult
+\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.32)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>An alternative (and instructive) way to prove this result is developed in <a href="#problem:pr66">problem 1.6</a>.</p>
+<p>2) We might well ask under what circumstance can there be another value of <span class="math inline">\(k\)</span> such that <span class="math inline">\(\left| {{\varphi _{xx}}[k]} \right| = {\varphi _{xx}}[0]\)</span>. The most common situation where equality is achieved is when the autocorrelation function contains a periodic component. That is, if <span class="math inline">\({\varphi _{xx}}[k] = {\varphi _{xx}}[k + K]\)</span> then the maximum value will be repeated every <span class="math inline">\(K\)</span> time instances. This is illustrated in <a href="#example:predict_weather"><span class="citation" data-cites="example:predict_weather">[@example:predict_weather]</span></a><span class="todo">Example 5.4</span>. There are more elaborate ways of describing this situation but this will suffice for our introductory level.</p>
+<p>3) Finally we can determine a bound on the average output power <span class="math inline">\({\varphi _{yy}}[0]\)</span> given the average input power and the LTI filter characteristic <span class="math inline">\(H(\Omega )\)</span>.</p>
+<div id="eq:power_out1" class="math">
+<div id="eq:power_out1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[E\left\{ {{{\left| {y[n]} \right|}^2}} \right\} = {\varphi _{yy}}[0] = \frac{1}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{{\left| {H( - \Omega )} \right|}^2}{S_{xx}}(\Omega )d\Omega }\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.33)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Let <span class="math inline">\({\Omega _m}\)</span> be the frequency at which the filter has its maximum gain <span class="math inline">\(\left| {H( - {\Omega _m})} \right|\)</span>. This implies:</p>
+<div id="eq:power_out2" class="math">
+<div id="eq:power_out2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[E\left\{ {{{\left| {y[n]} \right|}^2}} \right\} \le \frac{{{{\left| {H( - {\Omega _m})} \right|}^2}}}{{2\pi }}\int\limits_{ - \pi }^{ + \pi } {{S_{xx}}(\Omega )d\Omega }\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.34)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><span class="math display">\[{\varphi _{yy}}[0] \le {\left| {H( - {\Omega _m})} \right|^2}{\varphi _{xx}}[0]\]</span>$${#eq:power_out3 .mainresult}</p>
+<p>The average output power will attain the maximum if and only if</p>
+<div id="eq:power_out4" class="math">
+<div id="eq:power_out4">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{S_{xx}}(\Omega ) = B\delta (\Omega  - {\Omega _m}) + B\delta (\Omega  + {\Omega _m})\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.35)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>that is, if <span class="math inline">\({\varphi _{xx}}[k]\)</span> is of the form <span class="math inline">\(\cos \left( {{\Omega _m}k} \right)\)</span>. This follows directly from <a href="#eq:power_out1">eq. 1.33</a> and <a href="#eq:power_out2">eq. 1.34</a>. The only way for the maximum to be achieved is if all the spectral power is concentrated at the frequencies <span class="math inline">\(\pm {\Omega _m}\)</span> where the filter has its maxima.</p>
+<div id="example:IraqKuwait" class="example">
+<p>Example 1.1 - A world of random events</p>
+</div>
+<p>The relationship described in <a href="#eq:max_acorr4">eq. 1.32</a> might seem like a rather abstract result. In this example, we hope to show that use of the result can lead to useful insights into complex systems. The data shown in <a href="#fig:IraqKuwait_1">fig. 1.3</a> are the price at the “wellhead” of a barrel of oil (“Brent crude”), <span class="math inline">\(c[n]\)</span>, and the price of a liter of refined automobile gasoline (benzine) at the “pump” <span class="math inline">\(g[n]\)</span>. The graphs show the development of the price over a period of months.</p>
+<p><span class="smaller"><em>Brent oil price per barrel starting 1 Jan 1990:</em></span></p>
+<p><img src="images/Fig_6_3_T.png" class="fullsize" /> </p>
+<p><span class="smaller"><em>Brent price 2 Aug 1990 ± 30 days:</em></span></p>
+<p><img src="images/Fig_6_3_M.png" class="fullsize" /> </p>
+<p><span class="smaller"><em>Gasoline price per liter starting 1 Jan 1990:</em></span></p>
+<figure>
+<img src="images/Fig_6_3_B.png" alt="Figure 1.3: Price evolution of crude oil c[n] and refined gasoline g[n] (top) Barrel price from 1 January 1990 to 16 October 1990 [289 days], The day of the event is indicated by the arrow. (middle) Daily price evolution surrounding 2 August 1990, that is, day 214 ± 30 days, (bottom) Liter price (to consumers) from 1 January 1990 to 16 October 1990 [289 days]. The day of the event is indicated by the arrow." id="fig:IraqKuwait_1" class="fullsize" /><figcaption>Figure 1.3: Price evolution of crude oil <span class="math inline">\(c[n]\)</span> and refined gasoline <span class="math inline">\(g[n]\)</span> (<em>top</em>) Barrel price from 1 January 1990 to 16 October 1990 [289 days], The day of the event is indicated by the arrow. (<em>middle</em>) Daily price evolution <em>surrounding</em> 2 August 1990, that is, day 214 ± 30 days, (<em>bottom</em>) Liter price (to consumers) from 1 January 1990 to 16 October 1990 [289 days]. The day of the event is indicated by the arrow.</figcaption>
+</figure>
+<p>On 2 August 1990, the 214th day of that year, an event occurred in the Middle East that influenced the world-wide price of crude oil. The steep rise in price of a barrel of oil, shown in the middle panel of <a href="#fig:IraqKuwait_1">fig. 1.3</a>, attests to this. An increase in the price of a liter of gasoline at retail distribution points would also follow from this. The question we pose is: what is the <em>delay</em> between a rise in prices at the wellhead and a rise in prices at the “pump”? How many days does it take before the price rises in the retail sale of gasoline?</p>
+<p>To answer this we assume that the price of gasoline <span class="math inline">\(g[n]\)</span> is a delayed version, that is function, of the price of crude oil <span class="math inline">\(c[n]\)</span>. But this cannot be expressed as simply <span class="math inline">\(g[n] = c[n - k]\)</span>. Between these two prices are complicated processes, some industrial and some marketplace. Nevertheless, one cannot help but being struck by the similarity of the top and bottom curves in <a href="#fig:IraqKuwait_1">fig. 1.3</a>.</p>
+<p>The cross-correlation between the two prices, under the assumption that the major effect is a time delay, can help us find the answer. Assuming that the system is a pure time delay, <span class="math inline">\(h[n] = \delta [n - k]\)</span>, and using <a href="#eq:filt_crosscorr2">eq. 1.17</a> gives:</p>
+<div id="eq:IraqKuwait_delay1" class="math">
+<div id="eq:IraqKuwait_delay1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[\begin{array}{*{20}{l}}
+{{\varphi _{cg}}[k]}&amp;{ = {h^*}[k] \otimes {\varphi _{cc}}[k] = \delta [n - k] \otimes {\varphi _{cc}}[k]}\\
+{\,\,\,}&amp;{ = {\varphi _{cc}}[n - k]}
+\end{array}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.36)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A simple substitution, <span class="math inline">\(m = n - k\)</span>, allows us to rewrite this as</p>
+<div id="eq:IraqKuwait_delay2" class="math">
+<div id="eq:IraqKuwait_delay2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[{\varphi _{cg}}[n - m] = {\varphi _{cc}}[m]\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.37)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Applying <a href="#eq:max_acorr4">eq. 1.32</a> to <a href="#eq:IraqKuwait_delay2">eq. 1.37</a> means that, given the model of a simple delay element, the time <span class="math inline">\(m = 0\)</span> when the <em>autocorrelation</em> is a maximum is the same as the time <span class="math inline">\(m = n\)</span> when the <em>cross-correlation</em> is a maximum. The cross-correlation is illustrated in <a href="#fig:IraqKuwait_2">fig. 1.4</a>.</p>
+<figure>
+<img src="images/Fig_6_4.png" alt="Figure 1.4: Cross-correlation {\varphi _{cg}}[k] between the crude oil price and the gasoline pump price over an interval of 51 days. Day 0 is 2 August 1990, day 214 of the year. The position of maximum correlation is indicated by the arrow." id="fig:IraqKuwait_2" class="fullsize" /><figcaption>Figure 1.4: Cross-correlation <span class="math inline">\({\varphi _{cg}}[k]\)</span> between the crude oil price and the gasoline pump price over an interval of 51 days. Day 0 is 2 August 1990, day 214 of the year. The position of maximum correlation is indicated by the arrow.</figcaption>
+</figure>
+<p>The time at which the maximum occurs is day 18. Our estimate for the time delay between the wellhead and the gasoline pump, in the midst of all the stochastic variations and the (over)simplification of the model, is 18 days.</p>
+<h2 id="problems"><span class="header-section-number">1.5</span> Problems</h2>
+<div id="problem:pr61" class="problem">
+<p>Problem 1.1</p>
+</div>
+<p>The input to a discrete-time, LTI system is a stochastic signal, <span class="math inline">\(x[n]\)</span>. At each time step the output is <span class="math inline">\(+ \delta [n - k]\)</span> with probability <span class="math inline">\(p\)</span> or <span class="math inline">\(- \delta [n - k]\)</span> with probability <span class="math inline">\(1 - p\)</span>. Thus we can write:</p>
+<p><span class="math display">\[x[n] = \sum\limits_{k = --\infty }^{ + \infty } {{a_k}\delta [n - k]}\]</span></p>
+<p>where</p>
+<p><span class="math display">\[{a_k} = \left\{ {\begin{array}{*{20}{l}}
+{ + 1}&amp;{{\mathop{\rm with}\nolimits} \,probability\,p}\\
+{ - 1}&amp;{{\mathop{\rm with}\nolimits} \,probability\,1 - p}
+\end{array}} \right.\]</span></p>
+<p>The LTI system has <span class="math inline">\(h[n] = {\left( {\frac{1}{4}} \right)^n}u[n]\)</span>.</p>
+<div class="indentlist">
+<ol type="a">
+<li>Draw and label one possible stochastic signal <span class="math inline">\(x[n]\)</span> from this random process.</li>
+<li>Draw and label <span class="math inline">\(y[n]\)</span> the output signal corre­sponding to your choice of <span class="math inline">\(x[n]\)</span>.</li>
+<li>Determine <span class="math inline">\({m_y} = E\left\{ {y[n]} \right\}\)</span>. Your answer should not contain any integrals or summations.</li>
+<li>Determine <span class="math inline">\({\varphi _{yy}}[k = 0] = {\left. {E\left\{ {y[n]\,{y^*}[n + k]} \right\}} \right|_{k = 0}}\)</span>.</li>
+</ol>
+</div>
+<div id="problem:pr62" class="problem">
+<p>Problem 1.2</p>
+</div>
+<p>The impulse response of a discrete-time, LTI system is given by:</p>
+<p><span class="math display">\[h[n] = 3\delta [n] - 8{\left( {\frac{1}{3}} \right)^{n - 1}}u[n - 1]\]</span></p>
+<p>The input signal is a real, ergodic signal <span class="math inline">\(x[n]\)</span> where:</p>
+<p><span class="math display">\[{\varphi _{xx}}[k] = E\left\{ {x[n]\,{x^*}[n + k]} \right\} = {\left( {\frac{1}{3}} \right)^{ - \left| k \right|}}\]</span></p>
+<p>The output signal of the LTI system is <span class="math inline">\(y[n]\)</span>.</p>
+<div class="indentlist">
+<ol type="a">
+<li>Determine <span class="math inline">\({m_y} = E\left\{ {y[n]} \right\}\)</span>.</li>
+<li>Determine <span class="math inline">\({\varphi _{yy}}[k] = E\left\{ {y[n]\,{y^*}[n + k]} \right\}\)</span>.</li>
+</ol>
+</div>
+<div id="problem:pr63" class="problem">
+<p>Problem 1.3</p>
+</div>
+<p><em>Discuss the following proposition:</em></p>
+<p>The function <span class="math inline">\(f[k]\)</span> given below <em>cannot</em> be the auto-correlation function of a stochastic signal.</p>
+<p><span class="math display">\[f[k] = \left\{ {\begin{array}{*{20}{l}}
+1&amp;{\left| k \right| \le 7}\\
+0&amp;{\left| k \right| &gt; 7}
+\end{array}} \right.\]</span></p>
+<div id="problem:pr64" class="problem">
+<p>Problem 1.4</p>
+</div>
+<p>When the discrete-time input signal <span class="math inline">\(x[n]\)</span> is white noise with autocorrelation function <span class="math inline">\({\varphi _{xx}}[k] = \delta [k]\)</span>, the output signal from an LTI system is ergodic with power spectral density:</p>
+<p><span class="math display">\[{S_{yy}}(\Omega ) = \frac{9}{{13 - 12\cos (\Omega )}}\]</span></p>
+<div class="indentlist">
+<ol type="a">
+<li>Determine two possible causal, LTI filters <span class="math inline">\({H_1}\left( \Omega \right)\)</span> and <span class="math inline">\({H_2}\left( \Omega \right)\)</span> that could lead to this output power density spectrum.</li>
+<li>Given either of the filters, <span class="math inline">\({H_1}\left( \Omega \right)\)</span> or <span class="math inline">\({H_2}\left( \Omega \right)\)</span>, from part (a), determine another, different noise signal <span class="math inline">\(q[n]\)</span> that would yield the same <span class="math inline">\({S_{yy}}(\Omega )\)</span> as given in part (a).</li>
+</ol>
+</div>
+<div id="problem:pr65" class="problem">
+<p>Problem 1.5</p>
+</div>
+<p>An ergodic process, <span class="math inline">\(x[n]\)</span>, is input to an LTI system with impulse response <span class="math inline">\(h[n]\)</span> and Fourier transform <span class="math inline">\(H(\Omega )\)</span>. The output is <span class="math inline">\(y[n]\)</span>. It is known that <span class="math inline">\(h[n = 0] \ne 0\)</span>.</p>
+<p><em>Discuss the following proposition:</em></p>
+<p>If the mean of the input <span class="math inline">\(E\left\{ {x[n]} \right\} = {m_x} \ne 0\)</span> then <span class="math inline">\(E\left\{ {y[n]} \right\} = {m_y} \ne 0\)</span>.</p>
+<div id="problem:pr66" class="problem">
+<p>Problem 1.6</p>
+</div>
+<p>Consider the following expression for a real, ergodic signal <span class="math inline">\(x[n]\)</span>:</p>
+<div id="eq:second_proof" class="math">
+<div id="eq:second_proof">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[E\left\{ {{{\left| {x[n] \pm x[n + k]} \right|}^2}} \right\} \geqslant 0\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.38)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="indentlist">
+<ol type="a">
+<li>Why is this expected value non-negative?</li>
+<li>Use this expression to prove <a href="#eq:max_acorr4">eq. 1.32</a>.</li>
+</ol>
+</div>
+<h2 id="laboratory-exercises"><span class="header-section-number">1.6</span> Laboratory Exercises</h2>
+<div id="laboratory_exercise:le61" class="laboratoryExercise">
+<p>Laboratory Exercise 1.1</p>
+</div>
+<p>In this and other laboratory exercises we will sometimes use the “digital” frequency <span class="math inline">\(\Omega\)</span> and sometimes use the “analog” frequency <span class="math inline">\(\omega \,\,( = 2\pi f)\)</span>. Although the free use of both concepts in one exercise may be a bit unorthodox, the sampling frequency is 32 kHz so there should not be any confusion as to their relation.</p>
+<p>In <span class="todo">Chapters 4 and 5</span> we defined white noise and pink noise and presented two mathematical examples: <a href="#example:white_noise"><span class="citation" data-cites="example:white_noise">[@example:white_noise]</span></a><span class="todo">Example 5.2</span> and <a href="#example:pink_noise"><span class="citation" data-cites="example:pink_noise">[@example:pink_noise]</span></a><span class="todo">Example 5.3</span>. In this and the subsequent laboratory exercise we will look at various “physical” examples.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, <strong>Gaussian</strong> noise <span class="math inline">\(G[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to the random signal.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>As shown in <a href="#fig:labexp61">fig. 1.5</a>, in the top-left panel the Gaussian noise signal is displayed and in the top-right panel an estimate of the probability density function as measured from the samples in <span class="math inline">\(G[n]\)</span><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
+<figure>
+<img src="images/Fig_6_5.png" alt="Figure 1.5: Window that accompanies generation of Gaussian noise G[n]." id="fig:labexp61" /><figcaption>Figure 1.5: Window that accompanies generation of Gaussian noise <span class="math inline">\(G[n]\)</span>.</figcaption>
+</figure>
+<p>In the lower-right panel the normalized power spectral density <span class="math inline">\({S_{GG}}(\Omega )\)</span> is displayed as computed from <a href="#eq:summ_pds_real">eq. <strong>¿eq:summ_pds_real?</strong></a><span class="todo">Eq. 5.31</span>. In the associated left panel, the normalized autocorrelation function <span class="math inline">\({\varphi _{GG}}[k]\)</span> is displayed—not from application of <a href="#eq:acorrtimeavg_scaled">eq. <strong>¿eq:acorrtimeavg_scaled?</strong></a><span class="todo">Eq. 5.13</span>—but computed, instead, from the inverse Fourier transform <span class="math inline">\({\varphi _{GG}}[k] = {F^{ - 1}}\left\{ {{S_{GG}}(\Omega )} \right\}\)</span>. This seemingly indirect route allows us to use the computationally efficient FFT routine. This is an example of where we have used <span class="math inline">\(\omega = 2\pi f\)</span> (in the lower-right panel) together with <span class="math inline">\(\Omega\)</span> (in the formula).</p>
+<div class="indentlist">
+<ol type="i">
+<li>Based upon a stochastic signal of length <span class="math inline">\(N\)</span>, how much faster is the computation of <span class="math inline">\({\varphi _{GG}}[k]\)</span> using the FFT algorithm compared to a direct computation of the autocorrelation?</li>
+<li>What does this imply about a speed improvement for 1.5 seconds of signal sampled at 32 kHz?</li>
+</ol>
+</div>
+<p>The “Zoom” slider on the top-left allows you to “zoom in” on the center of each display. On the top row a smaller sample of <span class="math inline">\(G[n]\)</span> is displayed and the estimate of the probability density function from <em>that</em> segment is displayed. On the bottom row the centers of <span class="math inline">\({\varphi _{GG}}[k]\)</span> and <span class="math inline">\({S_{GG}}(\omega )\)</span> are displayed but based upon the <em>complete</em> 1.5 second long signal <span class="math inline">\(G[n]\)</span>.</p>
+<div class="indentlist">
+<ol start="3" type="i">
+<li>Based upon the data shown in the bottom row, is it reasonable to conclude that <span class="math inline">\(G[n]\)</span> is a sample of a white noise process? Explain your reasoning.</li>
+</ol>
+</div>
+<p>Instead of Gaussian noise we will now use noise with a uniform probability distribution for the amplitude.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, <strong>uniform</strong> noise <span class="math inline">\(U[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to the random signal.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In the top-left panel the uniform noise signal is displayed and in the top-right panel an estimate of the probability density function as measured from the samples in <span class="math inline">\(U[n]\)</span>.</p>
+<p>In the lower-right panel the normalized power spectral density <span class="math inline">\({S_{UU}}(\omega )\)</span> is displayed. In the lower-left panel, the normalized autocorrelation function <span class="math inline">\({\varphi _{UU}}[k]\)</span> is displayed, computed from the inverse Fourier transform.</p>
+<p>Again, the “Zoom” slider on the top-left allows you to “zoom in” on the center of each display. On the top row a smaller sample of <span class="math inline">\(U[n]\)</span> is displayed as is an estimate of the probability density function from that segment. On the bottom row the centers of <span class="math inline">\({\varphi _{UU}}[k]\)</span> and <span class="math inline">\({S_{UU}}(\omega )\)</span> are displayed but based upon the complete 1.5 second long signal <span class="math inline">\(U[n]\)</span>.</p>
+<div class="indentlist">
+<ol start="4" type="i">
+<li>Based upon the data shown in the bottom row, is it reasonable to conclude that <span class="math inline">\(U[n]\)</span> is a sample of a white noise process? Explain your reasoning.</li>
+<li>Do you perceive the two noise signals, <span class="math inline">\(G[n]\)</span> and <span class="math inline">\(U[n]\)</span>, as being equally loud? Can the estimates of the probability density functions explain your answer?</li>
+</ol>
+</div>
+<p>We now generate binary noise. In this noise process there are only two possible amplitudes at each time point: either +1 with probability <span class="math inline">\(p\)</span> or –1 with probability <span class="math inline">\(1 - p\)</span>. Further, we choose <span class="math inline">\(p = 1/2\)</span> and this implies the “fair coin” that we have looked at in <a href="#example:coin_example"><span class="citation" data-cites="example:coin_example">[@example:coin_example]</span></a><span class="todo">Example 4.1</span> and <a href="#example:fair_coin"><span class="citation" data-cites="example:fair_coin">[@example:fair_coin]</span></a><span class="todo">Example 4.5</span>. The displays are as before.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="3" type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, <strong>binary</strong> noise <span class="math inline">\(B[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to the random signal.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="6" type="i">
+<li>Based upon the data shown in the bottom row, is it reasonable to conclude that <span class="math inline">\(B[n]\)</span> is a sample of a white noise process? Explain your reasoning.</li>
+<li>How do you perceive the loudness of <span class="math inline">\(B[n]\)</span> compared to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\(U[n]\)</span>? Can the estimates of the three probability density functions and/or the signals themselves explain your answer?</li>
+</ol>
+</div>
+<p><em>What does this mean?</em> You should have concluded that a white noise process does not have to have a Gaussian amplitude distribution.</p>
+<div id="laboratory_exercise:le62" class="laboratoryExercise">
+<p>Laboratory Exercise 1.2</p>
+</div>
+<p>In this problem you are to estimate the parameter of an ergodic noise process <span class="math inline">\(B[n]\)</span> based upon information from the autocorrelation function <span class="math inline">\({\varphi _{BB}}[k]\)</span> and/or the power spectral density <span class="math inline">\({S_{BB}}(\omega )\)</span>. The process is similar to the one that produced <span class="math inline">\(B[n]\)</span> in <a href="#laboratoryExercise:le61">laboratory exercise 1.1</a> but now the random variable has value <span class="math inline">\(+ 1\)</span> with probability <span class="math inline">\(p\)</span> and value <span class="math inline">\(0\)</span> with probability <span class="math inline">\(1 - p\)</span>. Let us call this “unfair” binary noise.</p>
+<p>Each time you perform this exercise by pressing the icon button below another sample of the process will be generated but with a <em>different</em> value for <span class="math inline">\(p\)</span>. The value of <span class="math inline">\(p\)</span> will be chosen randomly from the set <span class="math inline">\(\left\{ {0.1,\,0.2,\,0.3,\,0.4,\,0.5,\,0.6,\,0.7,\,0.8,\,0.9} \right\}\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, “unfair” binary noise <span class="math inline">\(B[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to <span class="math inline">\(B[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The display window that you will see has the following layout:</p>
+<figure>
+<img src="images/Fig_6_6.png" alt="Figure 1.6: The top row shows the binary noise signal B[n] and the mathematical model. The bottom row shows (left) the autocorrelation function {\varphi _{BB}}[k] and (right) the power spectral density {S_{BB}}(\omega )." id="fig:labexp62" /><figcaption>Figure 1.6: The top row shows the binary noise signal <span class="math inline">\(B[n]\)</span> and the mathematical model. The bottom row shows (left) the autocorrelation function <span class="math inline">\({\varphi _{BB}}[k]\)</span> and (right) the power spectral density <span class="math inline">\({S_{BB}}(\omega )\)</span>.</figcaption>
+</figure>
+<p>You will notice that no estimate of the probability density function is presented. You can use the “Zoom” slider to examine the details of the random signal.</p>
+<div class="indentlist">
+<ol type="i">
+<li>Based upon the data shown in the bottom row, is it reasonable to conclude that <span class="math inline">\(B[n]\)</span>, an “unfair” binary process, is a sample of a white noise process? Explain your reasoning.</li>
+<li>Based upon <span class="math inline">\(N\)</span> and the autocorrelation <span class="math inline">\({\varphi _{BB}}[k = 0]\)</span>, estimate the value of <span class="math inline">\(p\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({p_1}\)</span>.</li>
+<li>Based upon <span class="math inline">\(N\)</span> and the power spectral density <span class="math inline">\({S_{BB}}(\omega = 0)\)</span> as well as <span class="math inline">\({\varphi _{BB}}[k = 0]\)</span>, estimate the value of <span class="math inline">\(p\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({p_2}\)</span>.</li>
+<li>It should be clear what the true value of <span class="math inline">\(p\)</span> is for each experiment, each time another value for <span class="math inline">\(p\)</span> is randomly chosen from the set given above. By what percentage do <span class="math inline">\({p_1}\)</span> and <span class="math inline">\({p_2}\)</span> differ from <span class="math inline">\(p\)</span>? From each other?</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le63" class="laboratoryExercise">
+<p>Laboratory Exercise 1.3</p>
+</div>
+<p>In this problem you are to estimate the parameters of two, real, ergodic noise processes based upon information from their estimated autocorrelation function <span class="math inline">\({\varphi _{ \bullet \bullet }}[k]\)</span> and/or their estimated power spectral density <span class="math inline">\({S_{ \bullet \bullet }}(\omega )\)</span>.</p>
+<p>In the following:</p>
+<ul>
+<li><p><span class="math inline">\(\mu\)</span> is the mean value of the random process;</p></li>
+<li><p><span class="math inline">\(\sigma\)</span> is the standard deviation of the random process;</p></li>
+<li><p><span class="math inline">\(N\)</span> is the number of samples of the random process;</p></li>
+<li><p><span class="math inline">\({\varphi _0} = E\left\{ {{\varphi _{ \bullet \bullet }}[k = 0]} \right\}\)</span> is the <em>expected</em> value of the sample of the autocorrelation function at <span class="math inline">\(k = 0\)</span> as computed from the signal, and;</p></li>
+<li><p><span class="math inline">\({S_0} = E\left\{ {{S_{ \bullet \bullet }}(\omega = 0)} \right\}\)</span> is the <em>expected</em> value of the power spectral density at <span class="math inline">\(\omega = 0\)</span> as computed from the signal.</p></li>
+</ul>
+<p>The key is to develop two expressions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> that will enable us to estimate the relevant parameters.</p>
+<div class="indentlist">
+<ol type="i">
+<li>Find an expression based upon <span class="math inline">\(E\left\{ {{\varphi _{ \bullet \bullet }}[k]} \right\}\)</span> that relates <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(N\)</span>, and <span class="math inline">\({\varphi _0}\)</span> in the form <span class="math inline">\({\varphi _0} = f\left( {\mu ,\sigma ,N} \right)\)</span>.</li>
+<li>Find an expression based upon <span class="math inline">\(E\left\{ {{S_{ \bullet \bullet }}(\omega )} \right\}\)</span> that relates <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(N\)</span>, <span class="math inline">\({S_0}\)</span>, and <span class="math inline">\({\varphi _0}\)</span> in the form <span class="math inline">\({S_0} = g\left( {\mu ,\sigma ,N,{\varphi _0}} \right)\)</span>.</li>
+</ol>
+</div>
+<p>Note that these two expressions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> are independent of the distribution being studied so long as <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> exist and are finite.</p>
+<p>The two processes we will analyze are 1) an exponential distribution for the amplitude at each time sample leading to a random signal <span class="math inline">\(E[n]\)</span> and 2) a Poisson distribution at each time sample leading to a random signal <span class="math inline">\(P[n]\)</span>.</p>
+<p>We begin with an exponentially-distributed random process whose probability <em>density</em> function <span class="math inline">\(p(x\,|\,\alpha ) = \alpha {e^{ - \alpha x}}\)</span> where <span class="math inline">\(\alpha &gt; 0\)</span> and <span class="math inline">\(x \ge 0\)</span>. The single parameter <span class="math inline">\(\alpha\)</span> is randomly chosen from the set {10, 5, 2.5, 1.25, 0.625, 0.3125, 0.15625, 0.07813, 0.03906}.</p>
+<p>Each time you perform this exercise by pressing the icon button below another sample of the process will be generated but with a <em>different</em> value for the parameter of the random process.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, exponentially-distributed noise <span class="math inline">\(E[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to <span class="math inline">\(E[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>You can use the “Zoom” slider to examine the details of the random signal.</p>
+<div class="indentlist">
+<ol start="3" type="i">
+<li>Using the expression <span class="math inline">\(f\)</span>, <span class="math inline">\(N\)</span>, and the measured value <span class="math inline">\({\varphi _0}\)</span>, estimate the value of <span class="math inline">\(\alpha\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\alpha _f}\)</span>.</li>
+<li>Using the expression <span class="math inline">\(g\)</span>, <span class="math inline">\(N\)</span>, and the measured value density <span class="math inline">\({S_0}\)</span> as well as the measured <span class="math inline">\({\varphi _0}\)</span>, estimate the value of <span class="math inline">\(\alpha\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\alpha _g}\)</span>.</li>
+<li>By what percentage do <span class="math inline">\({\alpha _f}\)</span> and <span class="math inline">\({\alpha _g}\)</span> differ from each other? By what percentage do they differ from the true value <span class="math inline">\(\alpha\)</span>?</li>
+</ol>
+</div>
+<p>We continue with a Poisson-distributed random process whose probability <em>mass</em> function <span class="math inline">\(P(m\,|\,\lambda ) = {\lambda ^m}{e^{ - \lambda }}/m!\)</span> where <span class="math inline">\(\lambda &gt; 0\)</span> and <span class="math inline">\(m \ge 0\)</span>. The process has a single parameter <span class="math inline">\(\lambda\)</span> randomly chosen from the set {0.1, 0.2, 0.4, 0.8, 1.6, 3.2, 6.4, 12.8, 25.6}.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, Poisson-distributed noise <span class="math inline">\(P[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to <span class="math inline">\(P[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Once again you can use the “Zoom” slider to examine the details of the random signal.</p>
+<div class="indentlist">
+<ol start="6" type="i">
+<li>Using the expression <span class="math inline">\(f\)</span>, <span class="math inline">\(N\)</span>, and the measured value <span class="math inline">\({\varphi _0}\)</span>, estimate the value of <span class="math inline">\(\lambda\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\lambda _f}\)</span>.</li>
+<li>Using the expression <span class="math inline">\(g\)</span>, <span class="math inline">\(N\)</span>, and the measured value density <span class="math inline">\({S_0}\)</span> as well as the measured <span class="math inline">\({\varphi _0}\)</span>, estimate the value of <span class="math inline">\(\lambda\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\lambda _g}\)</span>.</li>
+<li>By what percentage do <span class="math inline">\({\lambda _f}\)</span> and <span class="math inline">\({\lambda _g}\)</span> differ from each other? By what percentage do they differ from the true value <span class="math inline">\(\lambda\)</span>?</li>
+<li>Can you hear any difference between the exponential and Poisson noise signals?</li>
+<li>Do these two random signals—<span class="math inline">\(E[n]\)</span> and/or <span class="math inline">\(P[n]\)</span>—meet the definition of white noise as presented in <a href="#example:fair_coin"><span class="citation" data-cites="example:fair_coin">[@example:fair_coin]</span></a><span class="todo">Example 4.5</span>?</li>
+<li>Could you justify processing any of these noise signals with algorithms designed for white noise? And, if so, under what conditions?</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le64" class="laboratoryExercise">
+<p>Laboratory Exercise 1.4</p>
+</div>
+<p>In the previous problem you have shown that with <span class="math inline">\(N\)</span>, <span class="math inline">\({\varphi _0}\)</span>, and <span class="math inline">\({S_0}\)</span>, there are two different ways to estimate the single parameter associated with an exponential distribution, <span class="math inline">\(\alpha\)</span>, or the Poisson distribution, <span class="math inline">\(\lambda\)</span>.</p>
+<p>In this problem you will see that knowledge of <span class="math inline">\(N\)</span> is not necessary, that <span class="math inline">\({\varphi _0}\)</span> and <span class="math inline">\({S_0}\)</span> when used together are sufficient.</p>
+<div class="indentlist">
+<ol type="i">
+<li>Use the two expressions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> from the previous problem to eliminate <span class="math inline">\(N\)</span> producing an expression that relates <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>, <span class="math inline">\({S_0}\)</span>, and <span class="math inline">\({\varphi _0}\)</span>, an expression of the form <span class="math inline">\({S_0} = h\left( {\mu ,\sigma ,{\varphi _0}} \right)\)</span>.</li>
+</ol>
+</div>
+<p>We will now use this relationship to estimate the parameter <span class="math inline">\(\alpha\)</span> of an exponentially-distributed random process without knowing <span class="math inline">\(N\)</span>.</p>
+<p>Each time you perform this exercise by pressing the button below another sample of the process will be generated but with a <em>different</em> value for the parameter of the random process chosen from the set described in <a href="#laboratoryExercise:le63">laboratory exercise 1.3</a>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, exponentially-distributed noise <span class="math inline">\(E[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to <span class="math inline">\(E[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>You can use the “Zoom” slider to examine the details of the random signal.</p>
+<div class="indentlist">
+<ol start="2" type="i">
+<li>Based upon the expression <span class="math inline">\(h\)</span> that you developed in part (i) above, use <span class="math inline">\({S_0}\)</span> and <span class="math inline">\({\varphi _0}\)</span> to estimate the value of <span class="math inline">\(\alpha\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\alpha _h}\)</span>.</li>
+<li>By what percentage do <span class="math inline">\({\alpha _h}\)</span> and the true <span class="math inline">\(\alpha\)</span> differ from one another?</li>
+</ol>
+</div>
+<p>We will now look at the case of Poisson noise. Again, the parameter of the random process will be chosen from the set described in <a href="#laboratoryExercise:le63">laboratory exercise 1.3</a>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to a 1.5 second sample of real, Poisson-distributed noise <span class="math inline">\(P[n]\)</span>. The playback icon <em>within</em> the display window allows you to listen to <span class="math inline">\(P[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Again, the “Zoom” slider can be used to examine the details of the random signal.</p>
+<div class="indentlist">
+<ol start="4" type="i">
+<li>Based upon the expression <span class="math inline">\(h\)</span> that you developed above, use <span class="math inline">\({S_0}\)</span> and <span class="math inline">\({\varphi _0}\)</span> to estimate the value of <span class="math inline">\(\lambda\)</span> that was used to generate this sample. Call this estimate <span class="math inline">\({\lambda _h}\)</span>.</li>
+<li>By what percentage do <span class="math inline">\({\lambda _h}\)</span> and the true <span class="math inline">\(\lambda\)</span> differ from one another?</li>
+<li>Can you hear any difference between the exponential and Poisson noise signals?</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le65" class="laboratoryExercise">
+<p>Laboratory Exercise 1.5</p>
+</div>
+<p>Consider a real, discrete-time, LTI system whose impulse response is <span class="math inline">\(h[n]\)</span>. The original input <span class="math inline">\(x(t)\)</span> is an ergodic signal that has been sampled at 32 kHz to produce <span class="math inline">\(x[n]\)</span>. The output <span class="math inline">\(y[n] = h[n] \otimes x[n]\)</span> is, therefore, an ergodic signal as well. The filter represented by <span class="math inline">\(h[n]\)</span> has a Fourier transform <span class="math inline">\(H(\Omega )\)</span>. The relation between the power spectral density of the input <span class="math inline">\(x[n]\)</span> and the power spectral density of the output <span class="math inline">\(y[n]\)</span> is given by <a href="#eq:filt_crosspds4">eq. 1.21</a>.</p>
+<p>In this first section <span class="math inline">\(x[n] = G[n]\)</span>, a white noise signal with a Gaussian amplitude distribution and <span class="math inline">\({G_F}[n]\)</span> is the filtered version of <span class="math inline">\(G[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = h[n] \otimes G[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The display window that you will see has the following layout:</p>
+<figure>
+<img src="images/Fig_6_7.png" alt="Figure 1.7: The top row shows the results for the Gaussian noise G[n]. The bottom row shows the results for the filtered noise {G_F}[n]." id="fig:labexp65" /><figcaption>Figure 1.7: The top row shows the results for the Gaussian noise <span class="math inline">\(G[n]\)</span>. The bottom row shows the results for the filtered noise <span class="math inline">\({G_F}[n]\)</span>.</figcaption>
+</figure>
+<div class="indentlist">
+<ol type="i">
+<li>Is the stochastic signal <span class="math inline">\({G_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>Based upon the data presented in the window, why is it reasonable to conclude that <span class="math inline">\(h[n]\)</span> is a lowpass filter as opposed to a highpass filter, bandpass filter, or band-reject filter? Be sure to use the “Zoom” slider.</li>
+<li>When you <em>listen</em> to each of the signals, does this support your answer to the previous question?</li>
+<li>Using the “Zoom” slider, examine the estimates of the autocorrelation functions of the input and output signals. Estimate the <em>FWHM</em> (full-width, half-maximum) of <span class="math inline">\({\varphi _{GG}}\left( {\tau = kT} \right)\)</span> and <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span> where <span class="math inline">\(T\)</span> is the sampling interval.</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>?</li>
+<li>Filters—particularly low pass filters—are frequently described as one-pole filters or two-pole filters or three-pole filters, and so forth. How many poles does the filter <span class="math inline">\(h[n]\)</span> have?</li>
+</ol>
+</div>
+<p>In this section <span class="math inline">\(x[n] = U[n]\)</span>, a white noise signal with a uniformly-distributed amplitude, and <span class="math inline">\({U_F}[n]\)</span> is the filtered version of <span class="math inline">\(U[n]\)</span>, that is, <span class="math inline">\({U_F}[n] = h[n] \otimes U[n]\)</span>. You can use the “Zoom” slider to examine the details of the various plots.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, uniformly-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="7" type="i">
+<li>Is the stochastic signal <span class="math inline">\({U_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>When you <em>listen</em> to each of the signals, do you hear the result of the filtering? How does this filtered result compare to the filtered Gaussian noise of the previous section?</li>
+<li>Examine the estimates of the autocorrelation functions of the input and output signals. Estimate the <em>FWHM</em> of <span class="math inline">\({\varphi _{UU}}\left( {\tau = kT} \right)\)</span> and <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span>. How do these <em>FWHM</em> estimates compare to the results for filtered and unfiltered Gaussian noise?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>?</li>
+</ol>
+</div>
+<p>Now we examine <span class="math inline">\(x[n] = E[n]\)</span>, a white noise signal with an exponentially-distributed amplitude and <span class="math inline">\({E_F}[n]\)</span> is the filtered version of <span class="math inline">\(E[n]\)</span>, that is, <span class="math inline">\({E_F}[n] = h[n] \otimes E[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="3" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, exponentially-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="11" type="i">
+<li>Is the stochastic signal <span class="math inline">\({E_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>When you <em>listen</em> to each of the signals, <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>, do you hear the result of the filtering? How does this filtered result compare to the previous results?</li>
+<li>Examine the estimates of the autocorrelation functions of the input and output signals. Estimate the <em>FWHM</em> of <span class="math inline">\({\varphi _{UU}}\left( {\tau = kT} \right)\)</span> and <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span>. How do these <em>FWHM</em> estimates compare to the previous results?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>?</li>
+<li>Can you estimate <span class="math inline">\(H\left( {\Omega = 0} \right)\)</span>? Explain your estimate.</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le66" class="laboratoryExercise">
+<p>Laboratory Exercise 1.6</p>
+</div>
+<p>Consider a different, discrete-time, LTI system whose impulse response is <span class="math inline">\(h[n]\)</span> and whose Fourier transform is <span class="math inline">\(H(\Omega )\)</span>.</p>
+<p><span class="math inline">\(G[n]\)</span> is a white noise signal with a Gaussian amplitude distribution and <span class="math inline">\({G_F}[n]\)</span> is the filtered version of <span class="math inline">\(G[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = h[n] \otimes G[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol type="i">
+<li>Is the stochastic signal <span class="math inline">\({G_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>Based upon the data presented in the window, what type of filter is <span class="math inline">\(h[n]\)</span>: a lowpass filter, a highpass filter, a bandpass filter, or a band-reject filter?</li>
+<li>When you <em>listen</em> to each of the signals, does this support your answer to the previous question?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>?</li>
+<li>Filters are frequently described as one-pole filters or two-pole filters or three-pole filters, and so forth. How many poles does the filter <span class="math inline">\(h[n]\)</span> have?</li>
+</ol>
+</div>
+<p>In this section <span class="math inline">\(x[n] = U[n]\)</span>, a white noise signal with a uniformly-distributed amplitude and <span class="math inline">\({U_F}[n]\)</span> is the filtered version of <span class="math inline">\(U[n]\)</span>, that is, <span class="math inline">\({U_F}[n] = h[n] \otimes U[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, uniformly-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="6" type="i">
+<li>Is the stochastic signal <span class="math inline">\({U_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>When you <em>listen</em> to each of the signals, do you hear the result of the filtering? How does this filtered result compare to the filtered Gaussian noise of the previous section?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>?</li>
+</ol>
+</div>
+<p>Now we examine <span class="math inline">\(x[n] = E[n]\)</span>, a white noise signal with an exponentially-distributed amplitude and <span class="math inline">\({E_F}[n]\)</span> is the filtered version of <span class="math inline">\(E[n]\)</span>, that is, <span class="math inline">\({E_F}[n] = h[n] \otimes E[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="3" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, exponentially-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="9" type="i">
+<li>Is the stochastic signal <span class="math inline">\({E_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>When you <em>listen</em> to each of the signals, <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>, do you hear the result of the filtering? How does this filtered result compare to the previous results?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>?</li>
+<li>Can you estimate <span class="math inline">\(H(\Omega = 0)\)</span>? Explain your estimate.</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le67" class="laboratoryExercise">
+<p>Laboratory Exercise 1.7</p>
+</div>
+<p>Consider yet another discrete-time, causal, linear, time-invariant system whose impulse response is <span class="math inline">\(h[n]\)</span> and whose Fourier transform is <span class="math inline">\(H(\Omega )\)</span>. The z-transform of <span class="math inline">\(h[n]\)</span> is give by:</p>
+<div id="eq:hz_1" class="math">
+<div id="eq:hz_1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[H(z) = \frac{1}{{1 - (2r\cos \theta ){z^{ - 1}} + {r^2}{z^{ - 2}}}}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.39)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><span class="math inline">\(G[n]\)</span> is a white noise signal with a Gaussian amplitude distribution and <span class="math inline">\({G_F}[n]\)</span> is the filtered version of <span class="math inline">\(G[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = h[n] \otimes G[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol type="i">
+<li>The region-of-convergence (ROC) of the z-transform <span class="math inline">\(H(z)\)</span> is not given in <a href="#eq:hz_1">eq. 1.39</a>. Why is this acceptable?</li>
+<li>Is the stochastic signal <span class="math inline">\({G_F}[n]\)</span> a “white” noise signal? Explain your reasoning.</li>
+<li>Based upon the data presented in the window, what type of filter is <span class="math inline">\(h[n]\)</span>: a lowpass filter, a highpass filter, a bandpass filter, or a band-reject filter?</li>
+<li>When you <em>listen</em> to each of the two signals, does this support your answer to the previous question?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>?</li>
+<li>At what (approximate) frequency (in kHz) does this filter have its maximum amplitude? What is the corresponding value of <span class="math inline">\(\theta\)</span> in <a href="#eq:hz_1">eq. 1.39</a>? Why is the term “approximate” used in this question?</li>
+<li>Describe the relationship between the autocorrelation function <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span> and the signal <span class="math inline">\(h[n]\)</span>.</li>
+</ol>
+</div>
+<p>A slightly-modified, discrete-time, linear, time-invariant system whose impulse response is <span class="math inline">\(h[n]\)</span> and whose Fourier transform is <span class="math inline">\(H(\Omega )\)</span> will now be used. The new z-transform of <span class="math inline">\(h[n]\)</span> is give by:</p>
+<div id="eq:hz_2" class="math">
+<div id="eq:hz_2">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[H(z) = \frac{{\left( {1 - 2r\cos \theta  + {r^2}} \right)}}{{1 - (2r\cos \theta ){z^{ - 1}} + {r^2}{z^{ - 2}}}}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.40)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Only the numerator has changed. The input <span class="math inline">\(x[n]\)</span> remains <span class="math inline">\(G[n]\)</span> a white noise signal with a Gaussian amplitude distribution and the output is <span class="math inline">\({G_F}[n]\)</span> the filtered version.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="8" type="i">
+<li>Based upon the data presented in the window, what type of filter is this new version of <span class="math inline">\(h[n]\)</span>: a lowpass filter, a highpass filter, a bandpass filter, or a band-reject filter?</li>
+<li>At what (approximate) frequency (in kHz) does this filter have its maximum amplitude? What is the corresponding value of <span class="math inline">\(\theta\)</span> in <a href="#eq:hz_2">eq. 1.40</a>?</li>
+<li>What is the meaning of the graph in the lower-right corner of the display window? What does it show?</li>
+<li>What is the approximate value of <span class="math inline">\({S_{FF}}(\omega )/{S_{GG}}(\omega )\)</span> evaluated at <span class="math inline">\(\omega = 0\)</span> and how does this compare to what you might expect from <a href="#eq:filt_crosspds4">eq. 1.21</a>?</li>
+</ol>
+</div>
+<p>In this section <span class="math inline">\(x[n] = U[n]\)</span>, a white noise signal with a uniformly-distributed amplitude and <span class="math inline">\({U_F}[n]\)</span> is the filtered version of <span class="math inline">\(U[n]\)</span>, that is, <span class="math inline">\({U_F}[n] = h[n] \otimes U[n]\)</span>. We will again use the filter represented by <a href="#eq:hz_2">eq. 1.40</a>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, uniformly-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="12" type="i">
+<li>At what (approximate) frequency (in kHz) does this filter have its maximum amplitude? What is the corresponding value of <span class="math inline">\(\theta\)</span> in <a href="#eq:hz_2">eq. 1.40</a>?</li>
+<li>When you <em>listen</em> to each of the signals, do you hear the result of the filtering? How does this filtered result compare to the filtered Gaussian noise of the previous section?</li>
+</ol>
+</div>
+<p>Now we examine <span class="math inline">\(x[n] = E[n]\)</span>, a white noise signal with an exponentially-distributed amplitude and <span class="math inline">\({E_F}[n]\)</span> is the filtered version of <span class="math inline">\(E[n]\)</span>, that is, <span class="math inline">\({E_F}[n] = h[n] \otimes E[n]\)</span>. The filter, however, has again been changed and is given by:</p>
+<div id="eq:hz_3" class="math">
+<div id="eq:hz_3">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[H(z) = \frac{{\sin \theta }}{{1 - (2r\cos \theta ){z^{ - 1}} + {r^2}{z^{ - 2}}}}\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.41)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Again, only the numerator has changed.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="3" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, exponentially-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="14" type="i">
+<li>When you <em>listen</em> to each of the signals, <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>, do you hear the result of the filtering? How does this filtered result compare to the previous results?</li>
+<li>How do you explain the change in the estimate of the probability density function between <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>?</li>
+<li>At what (approximate) frequency (in kHz) does this filter have its maximum amplitude? What is the corresponding value of <span class="math inline">\(\theta\)</span> in <a href="#eq:hz_3">eq. 1.41</a>?</li>
+<li>Can you estimate <span class="math inline">\(H(\Omega = 0)\)</span>? Explain your estimate.</li>
+<li>Using the value of <span class="math inline">\(\theta\)</span> you have found, estimate the corresponding value of <span class="math inline">\(r\)</span> in <a href="#eq:hz_3">eq. 1.41</a>?</li>
+<li><em>Difficult</em>: Starting from <span class="math inline">\(H(z)\)</span> as given in <a href="#eq:hz_3">eq. 1.41</a>, can you find a simple expression in <span class="math inline">\(r\)</span>, <span class="math inline">\(f(r)\)</span>, that gives the maximum amplitude of the filter?</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le68" class="laboratoryExercise">
+<p>Laboratory Exercise 1.8</p>
+</div>
+<p>In this problem we consider a real, finite impulse-response (FIR) filter <span class="math inline">\(h[n]\)</span> that has been designed to meet the following specifications:</p>
+<div id="eq:bpf_1" class="math">
+<div id="eq:bpf_1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[H(\Omega ) = \left\{ {\begin{array}{*{20}{l}}
+0&amp;{0 \le \Omega  \le \pi /20}\\
+1&amp;{\pi /10 \le \Omega  \le 2\pi /10}\\
+0&amp;{3\pi /10 \le \Omega  \le \pi }
+\end{array}} \right.\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.42)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="indentlist">
+<ol type="i">
+<li>What type of filter is this? Explain your reasoning.</li>
+<li>If the sampling frequency is 32 kHz, what are the corresponding frequencies (in kHz) of the various frequency bands? Explain your reasoning.</li>
+</ol>
+</div>
+<p>The input <span class="math inline">\(x[n] = G[n]\)</span>, a white noise signal with a Gaussian amplitude distribution. The output <span class="math inline">\(y[n] = {G_F}[n]\)</span> is the filtered version of <span class="math inline">\(G[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = h[n] \otimes G[n]\)</span>. The technique used to produce <span class="math inline">\({G_F}[n]\)</span> is the literal convolution of <span class="math inline">\(h[n]\)</span> with <span class="math inline">\(G[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, <em>time-domain filtered</em>, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="3" type="i">
+<li>Do the frequencies where the passband changes to stopband (and vice versa) correspond to the frequencies you expected?</li>
+<li>Why is the width of the probability distribution associated with the amplitudes of <span class="math inline">\({G_F}[n]\)</span> smaller than the width associated with <span class="math inline">\(G[n]\)</span>?</li>
+</ol>
+</div>
+<p>The same filter is again used but this time the technique used to produce <span class="math inline">\({G_F}[n]\)</span> is through the frequency domain. First the Discrete Fourier Transform (DFT) of the filter is computed yielding <span class="math inline">\(H({\Omega _k})\)</span>. The FIR filter consists of 43 values so the DFT also has 43 complex values, that is, <span class="math inline">\(k = 1,2,3,...,43\)</span>.</p>
+<p>Our intention is to multiply the discrete spectrum of the filter <span class="math inline">\(H({\Omega _k})\)</span> by the discrete spectrum of the signal <span class="math inline">\(G({\Omega _k})\)</span>. To do so, however, requires that the two spectra have the same number of discrete frequencies.</p>
+<div class="indentlist">
+<ol start="22" type="a">
+<li>Give at least two reasons why the two spectra must have the same number of frequencies?</li>
+</ol>
+</div>
+<p>The signal spectrum has over 40,000 frequencies so, to make the two equal in length, we use “zero-padding” on the filter in the time domain.</p>
+<div class="indentlist">
+<ol start="6" type="i">
+<li>Why will the signal spectrum have over 40,000 frequencies?</li>
+<li>If there are 40,000 frequencies and a sampling frequency of 32 kHz, what is the difference between two adjacent frequencies, <span class="math inline">\(\Delta \omega = {\omega _k} - {\omega _{k - 1}}\)</span> ?</li>
+</ol>
+</div>
+<p>We append enough zeroes to the FIR filter so that <span class="math inline">\(h[n]\)</span> and <span class="math inline">\(G[n]\)</span> have the same length. Next, we compute the DFT of the padded filter and use this result as <span class="math inline">\(H({\Omega _k})\)</span>. See Section 13-6 of [<a href="#_ENREF_8">8</a>].</p>
+<p>We then multiply the two spectra, <span class="math inline">\({G_F}({\Omega _k}) = H({\Omega _k})\,G({\Omega _k})\)</span>, and then compute the Inverse Discrete Fourier Transform (IDFT) to produce <span class="math inline">\({G_F}[n]\)</span>.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, <em>frequency-domain filtered</em>, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="8" type="i">
+<li>Do the frequencies where the passband changes to stopband (and vice versa) still correspond to the frequencies you expected?</li>
+<li>Is the width of the probability distribution associated with the amplitudes of <span class="math inline">\({G_F}[n]\)</span> still smaller than the width associated with <span class="math inline">\(G[n]\)</span>?</li>
+<li>Does the autocorrelation function <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span> shown in part (b) above resemble the autocorrelation function <span class="math inline">\({\varphi _{FF}}\left( {\tau = kT} \right)\)</span> shown in part (a) above? Use the “Zoom” function to examine the results.</li>
+<li>Does the ratio <span class="math inline">\({S_{FF}}(\omega )/{S_{GG}}(\omega )\)</span> computed through the Fourier domain and shown in part (b) above resemble the ratio <span class="math inline">\({S_{FF}}(\omega )/{S_{GG}}(\omega )\)</span> computed through convolution and shown in part (a) above? Use the “Zoom” function to examine the results.</li>
+</ol>
+</div>
+<p>We now change the filter but continue to use the frequency domain technique to study the results. Further, we use white noise with a uniform amplitude distribution. Again we append enough zeroes to the FIR filter so that <span class="math inline">\(h[n]\)</span> and <span class="math inline">\(U[n]\)</span> have the same length. This gives <span class="math inline">\({U_F}[n] = {F^{ - 1}}\left\{ {F\left\{ {h[n]} \right\} \bullet F\left\{ {U[n]} \right\}} \right\}\)</span>.</p>
+<p>In this problem we are considering a real, finite impulse-response (FIR) filter <span class="math inline">\(h[n]\)</span> that has been designed to meet the following specifications:</p>
+<div id="eq:bnf_1" class="math">
+<div id="eq:bnf_1">
+<table style="width:99%;">
+<colgroup>
+<col style="width: 90%" />
+<col style="width: 9%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math display">\[H(\Omega ) = \left\{ {\begin{array}{*{20}{l}}
+1&amp;{0 \le \Omega  \le \pi /10}\\
+0&amp;{0.25\pi  \le \Omega  \le 0.35\pi }\\
+1&amp;{0.55\pi  \le \Omega  \le \pi }
+\end{array}} \right.\]</span></td>
+<td style="text-align: right;"><span class="math display">\[(1.43)\]</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="indentlist">
+<ol start="12" type="i">
+<li>What type of filter is this? Explain your reasoning.</li>
+<li>If the sampling frequency is 32 kHz, what are the corresponding frequencies (in kHz) of the various frequency bands? Explain your reasoning.</li>
+</ol>
+</div>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="3" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, uniformly-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="14" type="i">
+<li>Do the frequencies where the passband changes to stopband (and vice versa) correspond to the frequencies you expected?</li>
+<li>Is the width of the probability distribution associated with the amplitudes of <span class="math inline">\({U_F}[n]\)</span> smaller than the width associated with <span class="math inline">\(U[n]\)</span>?</li>
+<li>Can you hear the difference between <span class="math inline">\(U[n]\)</span> and <span class="math inline">\({U_F}[n]\)</span>?</li>
+</ol>
+</div>
+<p>We now change the input signal to white noise with an exponential amplitude distribution, <span class="math inline">\(E[n]\)</span> and use the frequency domain technique to filter the signal. This means <span class="math inline">\({E_F}[n] = {F^{ - 1}}\left\{ {F\left\{ {h[n]} \right\} \bullet F\left\{ {E[n]} \right\}} \right\}\)</span></p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="4" type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, filtered, exponentially-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="16" type="i">
+<li>How do you explain the change in the probability distribution of the amplitudes?</li>
+<li>Can you hear the difference between <span class="math inline">\(E[n]\)</span> and <span class="math inline">\({E_F}[n]\)</span>?</li>
+</ol>
+</div>
+<div id="laboratory_exercise:le69" class="laboratoryExercise">
+<p>Laboratory Exercise 1.9</p>
+</div>
+<p>We now return to the real filter described in <a href="#eq:bpf_1">eq. 1.42</a> and used in <a href="#laboratoryExercise:le68">laboratory exercise 1.8</a><span class="suffix_color"><em>a,b</em></span>. The sampling frequency remains 32 kHz.</p>
+<p>The input <span class="math inline">\(x[n] = G[n]\)</span> is a white noise signal with a Gaussian amplitude distribution. The output <span class="math inline">\(y[n] = {G_F}[n]\)</span> is the filtered version of <span class="math inline">\(G[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = h[n] \otimes G[n]\)</span>. As in <a href="#laboratoryExercise:le68">laboratory exercise 1.8</a><span class="suffix_color"><em>b</em></span>, the frequency-domain technique is used to produce <span class="math inline">\({G_F}[n]\)</span>, that is, <span class="math inline">\({G_F}[n] = {F^{ - 1}}\left\{ {F\left\{ {h[n]} \right\} \bullet F\left\{ {G[n]} \right\}} \right\}\)</span></p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the data icon to generate, view, and listen to 1.5 second samples of real, <em>frequency-domain filtered</em>, Gaussian-distributed noise. The playback icons <em>within</em> the display window allow you to listen to <span class="math inline">\(G[n]\)</span> and <span class="math inline">\({G_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice that in the results window the correlation function and the power spectral density are now the <em>cross</em>-correlation function <span class="math inline">\({\varphi _{GF}}\left( {\tau = kT} \right)\)</span> and the <em>cross</em>-power spectral density <span class="math inline">\({S_{GF}}(\omega )\)</span>.</p>
+<div class="indentlist">
+<ol type="i">
+<li>Why is the <em>cross</em>-power spectral density displayed as <span class="math inline">\(\left| {{S_{GF}}(\omega )} \right|\)</span> instead of <span class="math inline">\({S_{GF}}(\omega )\)</span>?</li>
+<li>Sketch the impulse response <span class="math inline">\(h[n]\)</span> in as much detail as possible. At what time (in ms), for example, does <span class="math inline">\(h[n]\)</span> have its maximum value?</li>
+<li>At what time sample (in <span class="math inline">\(k\)</span>) does <span class="math inline">\(h[n]\)</span> have its maximum value?</li>
+<li>What difference do you expect between <span class="math inline">\(\left| {{S_{GF}}(\omega )} \right|\)</span> and <span class="math inline">\({S_{FF}}(\omega )\)</span>? (Refer, for example, to <a href="#laboratoryExercise:le68">laboratory exercise 1.8</a><span class="suffix_color"><em>b</em></span>.)</li>
+</ol>
+</div>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/normdata.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the “normalized data” button and examine the various signals that are shown.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="22" type="a">
+<li>Which of these signals could be the impulse response <span class="math inline">\(h[n]\)</span> used in this laboratory exercise?</li>
+</ol>
+</div>
+<p><em>What does it mean?</em> Understanding the formal relationship between correlation functions, power spectral densities, and linear time-invariant filters gives us the tools to understand how ergodic signals will be affected by filtering. Further, given the input and output signals—particularly when the input signal is white noise—allows us to characterize the LTI filter. Let us look at an example.</p>
+<div id="laboratory_exercise:le610" class="laboratoryExercise">
+<p>Laboratory Exercise 1.10</p>
+</div>
+<p>When we generate and play a synthetic signal as we did in <span class="todo"><a href="#laboratoryExercise:le56"><span class="citation" data-cites="laboratoryExercise:le56">[@laboratoryExercise:le56]</span></a></span>, the sound you hear is “filtered” through the electronics and the speaker in your device. If we then record this signal using the microphone of the device, additional filtering takes place.</p>
+<p>We will now use the techniques we have developed in this chapter to characterize this filtering. The input <span class="math inline">\(x[n] = U[n]\)</span> is a real, white noise signal with a uniform amplitude distribution.</p>
+<div class="indentlist">
+<ol type="i">
+<li>Describe a practical reason for using white noise based upon a uniform amplitude distribution instead of, say, a Gaussian amplitude distribution.</li>
+</ol>
+</div>
+<p>The output <span class="math inline">\(y[n] = {U_F}[n]\)</span> is real and is the filtered version of <span class="math inline">\(U[n]\)</span>, that is, <span class="math inline">\({U_F}[n] = h[n] \otimes U[n]\)</span>.</p>
+<p>In terms of the actual computations, in this exercise the following are performed in the order indicated:</p>
+<p><span class="math display">\[\begin{array}{l}
+X(\Omega ) = F\left\{ {x[n]} \right\}\,\,\, \to \,\,\,{S_{xx}}(\Omega ) = {\left| {X(\Omega )} \right|^2}\\
+Y(\Omega ) = F\left\{ {y[n]} \right\}\,\,\, \to \,\,\,{S_{yy}}(\Omega ) = {\left| {Y(\Omega )} \right|^2}\\
+{\varphi _{yy}}[k] = {F^{ - 1}}\left\{ {{S_{yy}}(\Omega )} \right\}\\
+{\varphi _{xy}}[k] = \sum\nolimits_n {x[n]y[n + k]} 
+\end{array}\]</span> with cyclic indexing on <span class="math inline">\(n\)</span>, and,<br />
+<span class="math display">\[{S_{xy}}(\Omega ) = F\left\{ {{\varphi _{xy}}[k]} \right\}\]</span></p>
+<p>The time index <span class="math inline">\(k\)</span> and the frequency variable <span class="math inline">\(\Omega\)</span> are then converted to <span class="math inline">\(\tau\)</span> and <span class="math inline">\(\omega\)</span>, respectively, using the sampling frequency of 32 kHz.</p>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/SyntheticIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol type="a">
+<li><p>Press the synthetic sound icon and wait while a sample of ≈1.5 second of a real, uniformly-distributed noise signal <span class="math inline">\(U[n]\)</span> is generated, played, and recorded through the microphone.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="imgtxt">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><button><image src="images/DataPlayAnimateIcon.png"></button></td>
+<td style="text-align: center;"><span class="math display">\[\longleftrightarrow\]</span></td>
+<td><ol start="2" type="a">
+<li><p>Press the “data” button to see the results. Further, press the playback icons <em>within</em> the display window to listen to both <span class="math inline">\(x[n] = U[n]\)</span> and <span class="math inline">\(y[n] = {U_F}[n]\)</span>.</p></li>
+</ol></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="indentlist">
+<ol start="2" type="i">
+<li>In terms of the mathematical models presented in this chapter, what is the difference between the upper and lower graphs on the right side of the window? That is, what is the difference between <span class="math inline">\({S_{yy}}(\omega )/{S_{xx}}(\omega )\)</span> and <span class="math inline">\(\left| {{S_{xy}}(\omega )/{S_{xx}}(\omega )} \right|\)</span>?</li>
+<li>In various laboratory exercises we have seen lowpass, bandpass, highpass, and notch filters. Are any of these filters approximate descriptions of the filtering that took place between the mathematical synthesis of the random signal and the mathematical analysis that followed?</li>
+<li>Where, in the chain of processing that occurred as described in the first paragraph of this exercise, is the signal most altered? In other words, for the approximate filter that you have just chosen, where does the alteration in the spectrum occur?</li>
+<li>Is there another type of important change that could have occurred during filtering that would not be “visible” in the graphs we have seen? Consider, for example, <span class="todo"><a href="#laboratoryExercise:le33"><span class="citation" data-cites="laboratoryExercise:le33">[@laboratoryExercise:le33]</span></a></span>.</li>
+<li>In terms of the mathematical models presented in this chapter, what is the difference between <span class="math inline">\({\varphi _{yy}}\left( {\tau = kT} \right)\)</span> and <span class="math inline">\({\varphi _{xy}}\left( {\tau = kT} \right)\)</span>? <em>Hint</em>: How do these graphs relate to <span class="math inline">\(h[n]\)</span>?</li>
+<li>How do you explain the difference between the graphs of <span class="math inline">\({\varphi _{yy}}\left( {\tau = kT} \right)\)</span> and <span class="math inline">\({\varphi _{xy}}\left( {\tau = kT} \right)\)</span>?</li>
+<li>How do you explain the difference between the estimates of the probability density function for <span class="math inline">\(x[n]\)</span> and <span class="math inline">\(y[n]\)</span>?</li>
+</ol>
+</div>
+<section class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The random signal presented here and in other laboratory exercises is based upon the random number generator contained in Mathematica. Professor Donald Knuth in his excellent book “Seminumerical Algorithms” presents a number of such algorithms together with John van Neumann’s warning that “<em>Anyone who attempts to generate random numbers by deterministic means is, of course, living in a state of sin</em>”.<a href="#fnref1">↩</a></p></li>
+</ol>
+</section>
+</div>
+</div>
+</body>
+</html>
