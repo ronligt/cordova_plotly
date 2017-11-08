@@ -21,10 +21,18 @@ var layout_rawdata = {
     title: "time [ms]",
   },
   showLegend: false,
+  margin: {
+    l: 10,
+    r: 10,
+  },
 };
 var layout_histogram = {
   title: "Histogram",
   showLegend: false,
+  margin: {
+    l: 30,
+    r: 10,
+  },
 };
 
 graph(default_num_elem);
@@ -44,7 +52,7 @@ function graph(num_elem) {
     type: 'histogram',
   }
 
-  Plotly.newPlot('rawdata', [trace_rawdata], layout_rawdata, {staticPlot: true});
+  Plotly.newPlot('rawdata', [trace_rawdata], layout_rawdata, {staticPlot: true}, {displayModeBar: false});
 
   Plotly.newPlot('histogram', [trace_histogram], layout_histogram, {staticPlot: true});
 
