@@ -1,6 +1,6 @@
 // Default values
-var max_num_elem = 2000;
-var default_num_elem = 500;
+var max_num_elem = 2048;
+var default_num_elem = 512;
 
 // Initialise data
 max_x = Array.apply(null, Array(max_num_elem)).map(function(_,i){return i;});
@@ -19,8 +19,8 @@ $('#slide1').change(function(){
 
 function graph(num_elem) {
   var trace1 = {
-    x: max_x.slice(1,num_elem),
-    y: max_y.slice(1,num_elem),
+    x: max_x.slice(0,num_elem),
+    y: max_y.slice(0,num_elem),
   };
 
   Plotly.newPlot('myDiv1', [trace1], layout1, {staticPlot: true});
