@@ -5,13 +5,21 @@ var step_time =        0.001 * max_time; // slider steps
 var sample_rate =      44100; // samples/second
 var max_num_elem =     Math.floor(max_time * sample_rate); // maximum number of samples
 var default_num_elem = Math.floor(default_time * sample_rate);
+var step_sample =      0.001 * max_num_elem;
 
 // Adjusting values in html
-$("#slide1").attr('min', step_time);
-$("#slide1").attr('step', step_time);
-$("#slide1").attr('max', max_time);
-$("#slide1").attr('value', default_time);
-$("#slide1value").html(default_time);
+// - slider with time
+// $("#slide1").attr('min', step_time);
+// $("#slide1").attr('step', step_time);
+// $("#slide1").attr('max', max_time);
+// $("#slide1").attr('value', default_time);
+// $("#slide1value").html(default_time);
+// - slider with samples
+$("#slide1").attr('min', step_sample);
+$("#slide1").attr('step', step_sample);
+$("#slide1").attr('max', max_num_elem);
+$("#slide1").attr('value', default_num_elem);
+$("#slide1value").html(default_num_elem);
 
 // SSP stuff
 var startSample = 0;
@@ -47,33 +55,33 @@ for (var i=startSample; i<stopSample; i++) {
   complex_data[i*2+1] = 0;
 }
 
-var trace_raw = {
-  name: 'raw',
-  x: time,
-  y: raw_data,
-  type: 'scatter',
-  mode: 'lines',
-  line: {
-    smoothing: 0,
-  },
-  opacity: 0.8,
-}
+// var trace_raw = {
+//   name: 'raw',
+//   x: time,
+//   y: raw_data,
+//   type: 'scatter',
+//   mode: 'lines',
+//   line: {
+//     smoothing: 0,
+//   },
+//   opacity: 0.8,
+// }
 
 // Calculate filter in time domain
 var complex_filtered_data = recurrenceFilter(coefficients, complex_data);  // t-domain filtering
 var real_filtered_data = uRs(complex_filtered_data);  // data is real
 
-var trace_filter = {
-  name: 'filter',
-  x: time,
-  y: real_filtered_data,
-  type: 'scatter',
-  mode: 'lines',
-  line: {
-    smoothing: 0,
-  },
-  opacity: 0.8,
-}
+// var trace_filter = {
+//   name: 'filter',
+//   x: time,
+//   y: real_filtered_data,
+//   type: 'scatter',
+//   mode: 'lines',
+//   line: {
+//     smoothing: 0,
+//   },
+//   opacity: 0.8,
+// }
 
 // // Calculate filter in frequency domain
 // var rSpect = fft(complex_data, nn, ndim, FORWARD);  // signal spectrum
@@ -84,21 +92,21 @@ var trace_filter = {
 // console.log(rSpect.length,rpsdTemp.length,autoCorrData.length);
 
 // Initialise plots
-// var layout_data = {
-//   title: "Data",
-//   xaxis: {
-//     title: "time [ms]",
-//     type: 'lineair',
-//     range: [1,4],
-//     // type: "date",
-//     // rangeslider: {},
-//   },
-//   showLegend: false,
-//   margin: {
-//     l: 30,
-//     r: 30,
-//   },
-// };
+var layout_data = {
+  title: "Data",
+  xaxis: {
+    title: "time [ms]",
+    // type: 'lineair',
+    // range: [1,4],
+    // type: "date",
+    // rangeslider: {},
+  },
+  showLegend: false,
+  margin: {
+    l: 30,
+    r: 30,
+  },
+};
 var layout_histogram = {
   title: "Histogram",
   showLegend: false,
@@ -109,7 +117,10 @@ var layout_histogram = {
 };
 
 // Draw plots with default number of elements
+// - slider with time
 graph(default_time);
+// - slider with samples
+graph(default_num_elem);
 
 // Redraw plot after slider change
 $('#slide1').change(function(){
@@ -117,60 +128,63 @@ $('#slide1').change(function(){
 });
 
 // Draw plot function
-function graph(end_time) {
-  // var slice_time = time.slice(0,num_elem);
+// - slider with time
+// function graph(end_time) {
+// - slider with samples
+function graph(num_elem) {
+  var slice_time = time.slice(0,num_elem);
   // var slice_time = timeView.slice(0,num_elem);
   // var slice_time = timeView.subarray(0, num_elem);
   // var slice_time = Array.from(slice_time);
-  // var slice_raw_data = raw_data.slice(0,num_elem);
+  var slice_raw_data = raw_data.slice(0,num_elem);
   // var slice_raw = rawView.subarray(0, num_elem);
   // var slice_raw = Array.from(slice_raw);
-  // var slice_real_filtered_data = real_filtered_data.slice(0,num_elem);
+  var slice_real_filtered_data = real_filtered_data.slice(0,num_elem);
 
-  // var trace_raw_data = {
-  //   name: "raw",
-  //   x: slice_time,
-  //   y: slice_raw_data,
-  //   type: 'scatter',
-  //   opacity: 0.8,
-  // };
-  var layout_data = {
-    title: "Data",
-    xaxis: {
-      title: "time [ms]",
-      type: 'lineair',
-      range: [0,end_time],
-      // type: "date",
-      // rangeslider: {},
-    },
-    showLegend: false,
-    margin: {
-      l: 30,
-      r: 30,
-    },
+  var trace_raw_data = {
+    name: "raw",
+    x: slice_time,
+    y: slice_raw_data,
+    type: 'scatter',
+    opacity: 0.8,
   };
-  // var trace_filtered_data = {
-  //   name: "filtered",
-  //   x: slice_time,
-  //   y: slice_real_filtered_data,
-  //   type: 'scatter',
-  //   opacity: 0.8,
-  // }
-  // var trace_raw_histogram = {
-  //   name: "raw",
-  //   x: slice_raw_data,
-  //   type: 'histogram',
-  //   opacity: 0.8,
-  // }
-  // var trace_filtered_histogram = {
-  //   name: "filtered",
-  //   x: slice_real_filtered_data,
-  //   type: 'histogram',
-  //   opacity: 0.8,
-  // }
+  // var layout_data = {
+  //   title: "Data",
+  //   xaxis: {
+  //     title: "time [ms]",
+  //     type: 'lineair',
+  //     range: [0,end_time],
+  //     // type: "date",
+  //     // rangeslider: {},
+  //   },
+  //   showLegend: false,
+  //   margin: {
+  //     l: 30,
+  //     r: 30,
+  //   },
+  // };
+  var trace_filtered_data = {
+    name: "filtered",
+    x: slice_time,
+    y: slice_real_filtered_data,
+    type: 'scatter',
+    opacity: 0.8,
+  }
+  var trace_raw_histogram = {
+    name: "raw",
+    x: slice_raw_data,
+    type: 'histogram',
+    opacity: 0.8,
+  }
+  var trace_filtered_histogram = {
+    name: "filtered",
+    x: slice_real_filtered_data,
+    type: 'histogram',
+    opacity: 0.8,
+  }
 
-  Plotly.newPlot('rawdata', [trace_raw, trace_filter], layout_data, {staticPlot: true});
+  Plotly.newPlot('rawdata', [trace_raw_data, trace_filtered_data], layout_data, {staticPlot: true});
 
-  // Plotly.newPlot('histogram', [trace_raw_histogram, trace_filtered_histogram], layout_histogram, {staticPlot: true});
+  Plotly.newPlot('histogram', [trace_raw_histogram, trace_filtered_histogram], layout_histogram, {staticPlot: true});
 
 }
