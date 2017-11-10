@@ -33,6 +33,9 @@ var leftCoeffs = [1,0];
 var rightCoeffs = youngBPFFilter;
 var coefficients = [ leftCoeffs, rightCoeffs ];
 
+var domRect = document.querySelector('#rawdata').getBoundingClientRect();
+var div_width = domRect.width;
+
 // Initialise data
 var time = Array(max_num_elem);
 // var timeBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT);
@@ -42,18 +45,6 @@ var raw_data = Array(max_num_elem);
 // var rawBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT);
 // var rawView = new Float32Array(rawBuffer);
 var complex_data = Array(max_num_elem*2);
-
-// Data generation
-for (var i=startSample; i<stopSample; i++) {
-  time[i] = i/sample_rate; // ms
-  // timeView[i] = i/sample_rate; // ms
-  // time[i] = Date.UTC(1970,0,1,0,0,0,Math.floor(i/sample_rate)); // ms
-  tau[i] = (i-middleSample)/sample_rate; // ms
-  raw_data[i] = randomGaussian(0.0, 1.0);
-  // rawView[i] = randomGaussian(0.0, 1.0);
-  complex_data[i*2] = raw_data[i];
-  complex_data[i*2+1] = 0;
-}
 
 // var trace_raw = {
 //   name: 'raw',
@@ -132,14 +123,30 @@ $('#slide1').change(function(){
 // function graph(end_time) {
 // - slider with samples
 function graph(num_elem) {
-  var slice_time = time.slice(0,num_elem);
+  // var slice_time = time.slice(0,num_elem);
   // var slice_time = timeView.slice(0,num_elem);
   // var slice_time = timeView.subarray(0, num_elem);
   // var slice_time = Array.from(slice_time);
-  var slice_raw_data = raw_data.slice(0,num_elem);
+  // var slice_raw_data = raw_data.slice(0,num_elem);
   // var slice_raw = rawView.subarray(0, num_elem);
   // var slice_raw = Array.from(slice_raw);
-  var slice_real_filtered_data = real_filtered_data.slice(0,num_elem);
+  // var slice_real_filtered_data = real_filtered_data.slice(0,num_elem);
+
+  var slice_time=[], slice_raw_data=[], slice_real_filtered_data=[];
+
+  var step = 1;
+  var max_width = 4*num_elem/max_num_elem*div_width;
+  if (num_elem > max_width) {
+    step = Math.ceil(num_elem/max_width);
+  }
+  var j = 0;
+  for (var i=0; i<num_elem; i += step) {
+    slice_time[j] = time[i];
+    slice_raw_data[j] = raw_data[i];
+    slice_real_filtered_data[j++] = real_filtered_data[i];
+  }
+
+  console.log(max_width)
 
   var trace_raw_data = {
     name: "raw",
@@ -172,13 +179,13 @@ function graph(num_elem) {
   }
   var trace_raw_histogram = {
     name: "raw",
-    x: slice_raw_data,
+    x: raw_data.slice(0,num_elem),
     type: 'histogram',
     opacity: 0.8,
   }
   var trace_filtered_histogram = {
     name: "filtered",
-    x: slice_real_filtered_data,
+    x: real_filtered_data.slice(0,num_elem),
     type: 'histogram',
     opacity: 0.8,
   }
@@ -186,5 +193,7 @@ function graph(num_elem) {
   Plotly.newPlot('rawdata', [trace_raw_data, trace_filtered_data], layout_data, {staticPlot: true});
 
   Plotly.newPlot('histogram', [trace_raw_histogram, trace_filtered_histogram], layout_histogram, {staticPlot: true});
+
+  console.log("width", layout_data.width)
 
 }

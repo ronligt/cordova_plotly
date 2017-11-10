@@ -51,7 +51,7 @@
   <main role="main" class="container">
 
     <div class="jumbotron">
-      <h1>Plotly with Bootstrap</h1>
+      <h1>Plotting with Bootstrap</h1>
     </div>
 
     <div class="row">
@@ -64,26 +64,29 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <div id="rawdata" class="responsive-plot"></div>
       </div>
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <div id="histogram" class="responsive-plot"></div>
       </div>
     </div>
     <div class="row"
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <div id="freqdata" class="responsive-plot"></div>
       </div>
-      <div class="col-md-6">
+      <div class="col-lg-6">
         <div id="correlation" class="responsive-plot"></div>
       </div>
     </div>
 
   </main>
 
+  <!-- Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
   <!-- Plotly -->
-  <script type="text/javascript" src="js/plotly.min.js"></script>
+  <!-- <script type="text/javascript" src="js/plotly.min.js"></script> -->
 
   <!-- Bootstrap -->
   <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -98,8 +101,9 @@
 
   <!-- Local script -->
   <script type="text/javascript" src="js/slider.js"></script>
-  <script type="text/javascript" src="js/plotly_resize.js"></script>
-  <script type="text/javascript" src="js/local.js"></script>
+  <!-- <script type="text/javascript" src="js/plotly_resize.js"></script>
+  <script type="text/javascript" src="js/plot_plotly.js"></script> -->
+  <script type="text/javascript" src="js/plot_google.js"></script>
 
 </body>
 <!-- Links to used scripts -->
