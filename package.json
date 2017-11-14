@@ -10,15 +10,10 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "bootstrap": "^4.0.0-beta.2",
     "cordova-browser": "^5.0.1",
-    "cordova-ios": "^4.5.2",
+    "cordova-ios": "^4.5.3",
     "cordova-plugin-statusbar": "^2.2.3",
-    "cordova-plugin-whitelist": "^1.3.2",
-    "figureplot": "^1.0.5",
-    "jquery": "^3.2.1",
-    "plotly.js": "^1.31.2",
-    "popper.js": "^1.12.6"
+    "cordova-plugin-whitelist": "^1.3.2"
   },
   "cordova": {
     "plugins": {
@@ -26,13 +21,8 @@
       "cordova-plugin-statusbar": {}
     },
     "platforms": [
-      "ios",
-      "browser"
+      "browser",
+      "ios"
     ]
-  },
-  "devDependencies": {
-    "browserify": "^14.5.0",
-    "mathjax-node": "^1.2.1",
-    "mathjax-node-page": "^1.4.0"
   }
 }

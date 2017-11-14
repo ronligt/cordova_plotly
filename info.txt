@@ -1,4 +1,4 @@
-Node version: v8.7.0
+Node version: v8.9.1
 
 Cordova version: 7.1.0
 
@@ -13,7 +13,7 @@ Config.xml file:
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="Chap_6_svg_new.html" />
+    <content src="plot.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -28,20 +28,16 @@ Config.xml file:
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <engine name="ios" spec="^4.5.2" />
+    <engine name="browser" spec="^5.0.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
-    <engine name="browser" spec="^4.1.0" />
-    <engine name="ios" spec="^4.5.1" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
 </widget>
 
 
 Plugins: 
 
-cordova-plugin-whitelist
+cordova-plugin-statusbar,cordova-plugin-whitelist
 
-
-
-iOS platform:
-
-Xcode 9.0.1
-Build version 9A1004
+No Platforms Currently Installed
 
