@@ -1,5 +1,3 @@
-// var fig=require('figureplot');
-
 // Default values
 var max_time =         1.5; // maximum recording time [seconds]
 var default_time =     0.1 * max_time; // default time
@@ -35,46 +33,37 @@ var leftCoeffs = [1,0];
 var rightCoeffs = youngBPFFilter;
 var coefficients = [ leftCoeffs, rightCoeffs ];
 
-// var domRect = document.querySelector('#raw').getBoundingClientRect();
-// var div_width = parseInt(domRect.width);
-// console.log(div_width);
+var domRect = document.querySelector('#data').getBoundingClientRect();
+var canvas_width = parseInt(domRect.width);
+console.log(canvas_width);
 
 // Initialise data
-// var time = Array(max_num_elem);
 var timeBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT);
 var timeView = new Float32Array(timeBuffer);
 var tau = Array(max_num_elem);
-// var raw_data = Array(max_num_elem);
+var tauBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT)
+var tauView = new Float32Array(tauBuffer)
 var rawBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT);
 var rawView = new Float32Array(rawBuffer);
-var complex_data = Array(max_num_elem*2);
+// var complex_data = Array(max_num_elem*2);
+var complexBuffer = new ArrayBuffer(2*max_num_elem*Float32Array.BYTES_PER_ELEMENT)
+var complexView = new Float32Array(complexBuffer)
 
-var minX,maxX,minY,maxY;
 // Data generation
 for (var i=startSample; i<stopSample; i++) {
-  // time[i] = i/sample_rate; // ms
-  // minX = (minX===undefined?time[i]:(time[i]<minX?time[i]:minX));
-  // maxX = (maxX===undefined?time[i]:(time[i]>maxX?time[i]:maxX));
   timeView[i] = i/sample_rate; // ms
-  minX = (minX===undefined?timeView[i]:(timeView[i]<minX?timeView[i]:minX));
-  maxX = (maxX===undefined?timeView[i]:(timeView[i]>maxX?timeView[i]:maxX));
-  // time[i] = Date.UTC(1970,0,1,0,0,0,Math.floor(i/sample_rate)); // ms
-  tau[i] = (i-middleSample)/sample_rate; // ms
-  // raw_data[i] = randomGaussian(0.0, 1.0);
-  // minY = (minY===undefined?raw_data[i]:(raw_data[i]<minY?raw_data[i]:minY));
-  // maxY = (maxY===undefined?raw_data[i]:(raw_data[i]>maxY?raw_data[i]:maxY));
+  tauView[i] = (i-middleSample)/sample_rate; // ms
   rawView[i] = randomGaussian(0.0, 1.0);
-  minY = (minY===undefined?rawView[i]:(rawView[i]<minY?rawView[i]:minY));
-  maxY = (maxY===undefined?rawView[i]:(rawView[i]>maxY?rawView[i]:maxY));
-  // complex_data[i*2] = raw_data[i];
-  // complex_data[i*2+1] = 0;
+  complexView[i*2] = rawView[i]
+  complexView[i*2+1] = 0
 }
 
-// console.log(minX,maxX,minY, maxY)
-
 // Calculate filter in time domain
-// var complex_filtered_data = recurrenceFilter(coefficients, complex_data);  // t-domain filtering
-// var real_filtered_data = uRs(complex_filtered_data);  // data is real
+var complexFilter = recurrenceFilter(coefficients, complexView);  // t-domain filtering
+var complexFilterView = Float32Array.from(complexFilter);
+var realFilterBuffer = new ArrayBuffer(max_num_elem*Float32Array.BYTES_PER_ELEMENT)
+var realFilterView = new Float32Array(realFilterBuffer)
+realFilterView = complexFilterView.filter(function (elem, index){return (index % 2) == 0})
 
 // // Calculate filter in frequency domain
 // var rSpect = fft(complex_data, nn, ndim, FORWARD);  // signal spectrum
@@ -91,9 +80,38 @@ graph(default_num_elem);
 activateSlider();
 
 function graph(num_elem) {
-  var handle_data = fig.figure(canvas_data, "time [s]", "", 0, timeView[num_elem-1], minY, maxY);
-  fig.plot(handle_data, timeView.subarray(0,num_elem), rawView.subarray(0,num_elem), 'line', 'blue', []);
-  var histogram = fig.hist(canvas_histogram, rawView.subarray(0,num_elem),100);
+  var xdata, ydata;
+  var xfilter, yfilter;
+  if (num_elem > canvas_width) {
+    var modulo = Math.ceil(num_elem / (canvas_width*(1+4*num_elem/max_num_elem)))
+    xdata = timeView.subarray(0,num_elem).filter(filterModulo)
+    var minY, maxY
+    ydata = rawView.subarray(0,num_elem).filter(filterModulo)
+    yfilter = realFilterView.subarray(0,num_elem).filter(function (elem, index) {return (index % modulo) == 0 })
+  } else {
+    xdata = timeView.subarray(0, num_elem)
+    ydata = rawView.subarray(0, num_elem)
+    yfilter = realFilterView.subarray(0, num_elem)
+    var minY=ydata[0], maxY=ydata[0]
+    for (var i=0; i<num_elem; i++) {
+      minY = (ydata[i] < minY?ydata[i]:minY)
+      maxY = (ydata[i] > maxY?ydata[i]:maxY)
+    }
+  }
+
+  var handle_data = fig.figure(canvas_data, "time [s]", "", 0, xdata[xdata.length-1], minY, maxY);
+  fig.plot(handle_data, xdata, ydata, 'line', 'blue', []);
+  fig.plot(handle_data, xdata, yfilter, 'line', 'red', [])
+  var histogram = fig.hist(canvas_histogram, ydata,100*(1+4*num_elem/max_num_elem));
+
+  function filterModulo(elem, index) {
+    if ((index % modulo) == 0) {
+      minY = (minY === undefined?elem:(elem < minY?elem:minY))
+      maxY = (maxY === undefined?elem:(elem > maxY?elem:maxY))
+      return true
+    }
+    return false
+  }
 }
 
 var view_data, view_histogram;
