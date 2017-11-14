@@ -228,5 +228,11 @@ function activateSlider() {
   $('#slide1').change(function(){
     // drawChart(parseInt($(this).val()));
     graph(parseInt($(this).val()));
-  });
+  })
+
+  // Redraw plot during slider changes
+  // $('#slide1').on('input', function(){
+  //   graph(parseInt($(this).val()))
+  // })
+
 }
