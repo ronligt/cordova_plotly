@@ -79,40 +79,41 @@ graph(default_num_elem);
 activateSlider();
 
 function graph(num_elem) {
-  var xdata, ydata;
-  var xfilter, yfilter;
-  var minTime, maxTime
-  var minRaw, maxRaw
-  var minFilter, maxFilter
   var modulo = Math.ceil(num_elem / (canvas_width*(1+4*num_elem/max_num_elem)))
+  var plotLength = Math.ceil(num_elem/modulo)
+
+  var timePlot = new Float32Array(plotLength)
   var min = undefined, max = undefined
-  xdata = timeView.subarray(0,num_elem).filter(filterModulo)
-  minTime = min
-  maxTime = max
+  timePlot = timeView.subarray(0,num_elem).filter(filterModulo)
+  var minTime = min
+  var maxTime = max
+
+  var rawPlot = new Float32Array(plotLength)
   var min = undefined, max = undefined
-  ydata = rawView.subarray(0,num_elem).filter(filterModulo)
-  minRaw = min
-  maxRaw = max
+  rawPlot = rawView.subarray(0,num_elem).filter(filterModulo)
+  var minRaw = min
+  var maxRaw = max
+
+  var filterPlot = new Float32Array(plotLength)
   var min = undefined, max = undefined
-  yfilter = realFilterView.subarray(0,num_elem).filter(filterModulo)
-  minFilter = min
-  maxFilter = max
+  filterPlot = realFilterView.subarray(0,num_elem).filter(filterModulo)
+  var minFilter = min
+  var maxFilter = max
 
-  min = Math.min(minRaw, minFilter)
-  max = Math.max(maxRaw, maxFilter)
+  var minData = Math.min(minRaw, minFilter)
+  var maxData = Math.max(maxRaw, maxFilter)
 
-  var handle_data = fig.figure(canvas_data, "time [s]", "", minTime, maxTime, min, max);
-  fig.plot(handle_data, xdata, ydata, 'line', 'blue', [], 1, 1, 0.6);
-  fig.plot(handle_data, xdata, yfilter, 'line', 'red', [], 1, 1, 0.6)
+  var handle_data = fig.figure(canvas_data, "time [s]", "", minTime, maxTime, minData, maxData);
+  fig.plot(handle_data, timePlot, rawPlot, 'line', 'blue', [], 1, 1, 0.6);
+  fig.plot(handle_data, timePlot, filterPlot, 'line', 'red', [], 1, 1, 0.6)
 
-  var binsRaw = fig.binning(ydata, Math.ceil(20 * (1 + 4 * num_elem / max_num_elem) * (maxRaw - minRaw) / (maxFilter - minFilter)));
-  var binsFilter = fig.binning(yfilter, Math.ceil(20 * (1 + 4 * num_elem / max_num_elem)));
+  var binsRaw = fig.binning(rawPlot, Math.ceil(20 * (1 + 4 * num_elem / max_num_elem) * (maxRaw - minRaw) / (maxFilter - minFilter)));
+  var binsFilter = fig.binning(filterPlot, Math.ceil(20 * (1 + 4 * num_elem / max_num_elem)));
 
-  var minX, maxX, minY, maxY;
-  minX = Math.min(binsRaw.minValue, binsFilter.minValue)
-  maxX = Math.max(binsRaw.maxValue, binsFilter.maxValue)
-  minY = 0
-  maxY = Math.max(binsRaw.maxFrequency, binsFilter.maxFrequency)
+  var minX = Math.min(binsRaw.minValue, binsFilter.minValue)
+  var maxX = Math.max(binsRaw.maxValue, binsFilter.maxValue)
+  var minY = 0
+  var maxY = Math.max(binsRaw.maxFrequency, binsFilter.maxFrequency)
 
   var handle = fig.figure(canvas_histogram, "", "time [s]", minX, maxX, minY, maxY);
   fig.plot(handle, binsRaw.value, binsRaw.frequency, 'bar', 'blue', [], 1, 1, 0.6);
@@ -125,12 +126,6 @@ function graph(num_elem) {
       return true
     }
     return false
-  }
-
-  function findMinMax(value, min, max) {
-    min = (min === undefined?value:(value < min?value:min))
-    max = (max === undefined?value:(value > max?value:max))
-    return [min, max]
   }
 }
 
